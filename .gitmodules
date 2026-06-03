@@ -6,4 +6,4 @@
 	url = https://github.com/agiresearch/Cerebrum.git
 [submodule "grc-nexus"]
 	path = grc-nexus
-	url = https://github.com/ledger101/grc-nexus.git
+	url = https://github.com/DocomoZW/grc-nexus.git
