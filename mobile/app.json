@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "GRC-Nexus Board",
+    "slug": "grc-nexus-board",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hurument.grcnexus.board",
+      "buildNumber": "1"
+    },
+    "android": {
+      "package": "com.hurument.grcnexus.board",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#1A3E6E",
+        "foregroundImage": "./assets/icon.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-secure-store",
+      "expo-local-authentication",
+      "expo-notifications"
+    ],
+    "extra": {
+      "supabaseUrl": "https://rxdadpfawdxmrkcvsdka.supabase.co",
+      "supabaseAnonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ4ZGFkcGZhd2R4bXJrY3ZzZGthIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0NjUyMzksImV4cCI6MjA5NTA0MTIzOX0.G4H0KuTRNsLIdjse9qb4ftqhRfgPz4GJ0aG6002NbEA"
+    }
+  }
+}
