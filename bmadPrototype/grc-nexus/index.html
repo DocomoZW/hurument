@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRC-Nexus | Executive Dashboard</title>
+  <script>if(localStorage.getItem('grc-theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');}</script>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="app-wrapper">
+
+  <!-- Top Nav -->
+  <nav class="topnav">
+    <button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Toggle Sidebar">☰</button>
+    <span class="topnav-logo">⚡ GRC-NEXUS</span>
+    <span class="topnav-brand">Ministry of Finance — Zimbabwe</span>
+    <div class="topnav-actions">
+      <button class="theme-toggle-btn" id="theme-btn" onclick="toggleDarkMode()" title="Toggle Dark Mode">🌙</button>
+      <div class="topnav-icon" title="Notifications">🔔<span style="position:absolute;background:var(--danger);color:#fff;border-radius:50%;font-size:9px;padding:1px 4px;margin-top:-8px;margin-left:6px;">5</span></div>
+      <div class="topnav-avatar" title="Tendai M.">TM</div>
+      <span class="topnav-user">Tendai M.</span>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-section-label">Navigation</div>
+      <ul class="sidebar-nav">
+        <li><a href="index.html" title="Dashboard"><span class="nav-icon">🏠</span> Dashboard</a></li>
+        <li><a href="strategic-planning.html" title="Strategic Planning"><span class="nav-icon">📊</span> Strategic Planning</a></li>
+        <li><a href="risk-register.html" title="Risk Management"><span class="nav-icon">⚠️</span> Risk Management</a></li>
+        <li><a href="board-management.html" title="Board Governance"><span class="nav-icon">👥</span> Board Governance</a></li>
+        <li><a href="compliance.html" title="Compliance"><span class="nav-icon">✅</span> Compliance</a></li>
+        <li><a href="incidents.html" title="Incidents"><span class="nav-icon">🚨</span> Incidents</a></li>
+        <li><a href="internal-audit.html" title="Internal Audit"><span class="nav-icon">🔍</span> Internal Audit</a></li>
+        <li><a href="vendor-risk.html" title="Vendor Risk"><span class="nav-icon">🏢</span> Vendor Risk</a></li>
+        <li><a href="reports.html" title="Reports"><span class="nav-icon">📈</span> Reports</a></li>
+      </ul>
+      <div class="sidebar-footer">GRC-Nexus v2.1<br>NDS2 Aligned Platform</div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="breadcrumb">
+        <span class="breadcrumb-current">Dashboard</span>
+      </div>
+      <div class="page-header">
+        <div class="page-title">Executive Overview</div>
+        <div class="page-subtitle">Ministry of Finance — Zimbabwe | As of 22 May 2026</div>
+      </div>
+
+      <!-- Stat Cards -->
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-icon">⚠️</div>
+          <div class="stat-value">23</div>
+          <div class="stat-label">Open Risks</div>
+          <div class="stat-trend up">▲ 3 from last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">❌</div>
+          <div class="stat-value">7</div>
+          <div class="stat-label">Overdue Compliance Items</div>
+          <div class="stat-trend up">▲ 2 from last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📋</div>
+          <div class="stat-value">12</div>
+          <div class="stat-label">Board Actions Pending</div>
+          <div class="stat-trend neutral">— unchanged</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🎯</div>
+          <div class="stat-value">68%</div>
+          <div class="stat-label">KPI Attainment Rate</div>
+          <div class="stat-trend down">▼ 4% from last quarter</div>
+        </div>
+      </div>
+
+      <!-- Heatmap + Compliance Chart -->
+      <div class="grid-2">
+        <!-- Risk Heatmap -->
+        <div class="card">
+          <div class="card-title"><span class="card-title-icon">⚠️</span> Enterprise Risk Heatmap</div>
+          <div class="heatmap-wrap">
+            <div class="heatmap-svg-container">
+              <svg viewBox="0 0 310 290" width="310" height="290" xmlns="http://www.w3.org/2000/svg">
+                <!-- Axis labels -->
+                <text x="5" y="145" font-size="10" fill="#6B7C93" transform="rotate(-90,12,145)" text-anchor="middle">Likelihood →</text>
+                <text x="165" y="288" font-size="10" fill="#6B7C93" text-anchor="middle">Impact →</text>
+                <!-- Column headers -->
+                <text x="55"  y="18" font-size="10" fill="#6B7C93" text-anchor="middle">1</text>
+                <text x="105" y="18" font-size="10" fill="#6B7C93" text-anchor="middle">2</text>
+                <text x="155" y="18" font-size="10" fill="#6B7C93" text-anchor="middle">3</text>
+                <text x="205" y="18" font-size="10" fill="#6B7C93" text-anchor="middle">4</text>
+                <text x="255" y="18" font-size="10" fill="#6B7C93" text-anchor="middle">5</text>
+                <!-- Row labels (likelihood 5 at top) -->
+                <text x="28" y="48"  font-size="10" fill="#6B7C93" text-anchor="middle">5</text>
+                <text x="28" y="98"  font-size="10" fill="#6B7C93" text-anchor="middle">4</text>
+                <text x="28" y="148" font-size="10" fill="#6B7C93" text-anchor="middle">3</text>
+                <text x="28" y="198" font-size="10" fill="#6B7C93" text-anchor="middle">2</text>
+                <text x="28" y="248" font-size="10" fill="#6B7C93" text-anchor="middle">1</text>
+                <!-- Grid cells — coloured by score (row=likelihood 5→1 top→bottom, col=impact 1→5 left→right) -->
+                <!-- Row 5 (L=5): scores 5,10,15,20,25 -->
+                <rect x="30" y="22" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="80" y="22" width="50" height="50" fill="#FDF2E5" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="130" y="22" width="50" height="50" fill="#FDF2E5" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="180" y="22" width="50" height="50" fill="#FCE8E8" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="230" y="22" width="50" height="50" fill="#FCE8E8" stroke="#DDE3EC" stroke-width="0.5"/>
+                <!-- Row 4 (L=4): scores 4,8,12,16,20 -->
+                <rect x="30"  y="72" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="80"  y="72" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="130" y="72" width="50" height="50" fill="#FDF2E5" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="180" y="72" width="50" height="50" fill="#FCE8E8" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="230" y="72" width="50" height="50" fill="#FCE8E8" stroke="#DDE3EC" stroke-width="0.5"/>
+                <!-- Row 3 (L=3): scores 3,6,9,12,15 -->
+                <rect x="30"  y="122" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="80"  y="122" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="130" y="122" width="50" height="50" fill="#FDF2E5" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="180" y="122" width="50" height="50" fill="#FDF2E5" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="230" y="122" width="50" height="50" fill="#FCE8E8" stroke="#DDE3EC" stroke-width="0.5"/>
+                <!-- Row 2 (L=2): scores 2,4,6,8,10 -->
+                <rect x="30"  y="172" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="80"  y="172" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="130" y="172" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="180" y="172" width="50" height="50" fill="#FDF2E5" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="230" y="172" width="50" height="50" fill="#FDF2E5" stroke="#DDE3EC" stroke-width="0.5"/>
+                <!-- Row 1 (L=1): scores 1,2,3,4,5 -->
+                <rect x="30"  y="222" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="80"  y="222" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="130" y="222" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="180" y="222" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="230" y="222" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <!-- Risk dots: (impact col, likelihood row) each dot at centre of cell -->
+                <!-- R-001: L=4, I=5 → x=255, y=97 -->
+                <circle cx="255" cy="97" r="14" fill="#C0392B" opacity="0.9"/>
+                <text x="255" y="101" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold">R-001</text>
+                <!-- R-002: L=5, I=4 → x=205, y=47 -->
+                <circle cx="205" cy="47" r="14" fill="#C0392B" opacity="0.9"/>
+                <text x="205" y="51" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold">R-002</text>
+                <!-- R-003: L=3, I=4 → x=205, y=147 -->
+                <circle cx="205" cy="147" r="14" fill="#E67E22" opacity="0.9"/>
+                <text x="205" y="151" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold">R-003</text>
+                <!-- R-004: L=3, I=3 → x=155, y=147 -->
+                <circle cx="155" cy="147" r="14" fill="#E67E22" opacity="0.9"/>
+                <text x="155" y="151" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold">R-004</text>
+                <!-- R-005: L=2, I=4 → x=205, y=197 -->
+                <circle cx="205" cy="197" r="14" fill="#E67E22" opacity="0.9"/>
+                <text x="205" y="201" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold">R-005</text>
+                <!-- R-006: L=2, I=2 → x=105, y=197 -->
+                <circle cx="105" cy="197" r="14" fill="#27AE60" opacity="0.9"/>
+                <text x="105" y="201" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold">R-006</text>
+              </svg>
+            </div>
+            <div class="heatmap-legend">
+              <div class="heatmap-legend-item"><div class="heatmap-legend-color" style="background:#FCE8E8;border:1px solid #F5B7B1;"></div> Critical (≥16)</div>
+              <div class="heatmap-legend-item"><div class="heatmap-legend-color" style="background:#FDF2E5;border:1px solid #FAD7A0;"></div> High (10–15)</div>
+              <div class="heatmap-legend-item"><div class="heatmap-legend-color" style="background:#EAF4FD;border:1px solid #AED6F1;"></div> Medium (5–9)</div>
+              <div class="heatmap-legend-item"><div class="heatmap-legend-color" style="background:#EAFAF0;border:1px solid #A9DFBF;"></div> Low (&lt;5)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Compliance Posture -->
+        <div class="card">
+          <div class="card-title"><span class="card-title-icon">✅</span> Compliance Posture</div>
+          <div style="display:flex;gap:20px;align-items:center;margin-bottom:20px;">
+            <svg viewBox="0 0 120 120" width="120" height="120" xmlns="http://www.w3.org/2000/svg">
+              <!-- Donut chart: 60% compliant, 25% due soon, 15% non-compliant -->
+              <!-- Total circumference of r=45: 2π×45 ≈ 282.7 -->
+              <!-- Compliant 60%: 169.6, Due Soon 25%: 70.7, Non-Compliant 15%: 42.4 -->
+              <circle cx="60" cy="60" r="45" fill="none" stroke="#27AE60" stroke-width="18"
+                stroke-dasharray="169.6 113.1" stroke-dashoffset="70.7" transform="rotate(-90 60 60)"/>
+              <circle cx="60" cy="60" r="45" fill="none" stroke="#E67E22" stroke-width="18"
+                stroke-dasharray="70.7 212" stroke-dashoffset="70.7" transform="rotate(117.3 60 60)"/>
+              <circle cx="60" cy="60" r="45" fill="none" stroke="#C0392B" stroke-width="18"
+                stroke-dasharray="42.4 240.3" stroke-dashoffset="70.7" transform="rotate(188 60 60)"/>
+              <text x="60" y="64" font-size="18" fill="#1C2B3A" font-weight="700" text-anchor="middle">60%</text>
+            </svg>
+            <div class="chart-legend">
+              <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#27AE60;"></div> Compliant (60%)</div>
+              <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#E67E22;"></div> Due Soon (25%)</div>
+              <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#C0392B;"></div> Non-Compliant (15%)</div>
+            </div>
+          </div>
+          <div class="comp-bar-chart">
+            <div class="comp-bar-row">
+              <span class="comp-bar-label">Statutory Obligations</span>
+              <div class="comp-bar-track"><div class="comp-bar-fill" style="width:72%;background:var(--success);"></div></div>
+              <span class="comp-bar-value">72%</span>
+            </div>
+            <div class="comp-bar-row">
+              <span class="comp-bar-label">Policy Compliance</span>
+              <div class="comp-bar-track"><div class="comp-bar-fill" style="width:85%;background:var(--success);"></div></div>
+              <span class="comp-bar-value">85%</span>
+            </div>
+            <div class="comp-bar-row">
+              <span class="comp-bar-label">Regulatory Returns</span>
+              <div class="comp-bar-track"><div class="comp-bar-fill" style="width:54%;background:var(--warning);"></div></div>
+              <span class="comp-bar-value">54%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity Feed -->
+      <div class="card">
+        <div class="card-title"><span class="card-title-icon">📋</span> Recent Activity</div>
+        <div class="activity-feed">
+          <div class="activity-item">
+            <div class="activity-icon risk">⚠️</div>
+            <div class="activity-content">
+              <div class="activity-text"><strong>RISK-007</strong> — Cybersecurity Breach risk escalated to Critical by <strong>Blessing T.</strong></div>
+              <div class="activity-time">Today, 09:14</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon board">👥</div>
+            <div class="activity-content">
+              <div class="activity-text">Board Resolution <strong>BR-2026-18</strong> recorded — Q2 Budget Revision approved</div>
+              <div class="activity-time">Yesterday, 15:32</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon audit">🔍</div>
+            <div class="activity-content">
+              <div class="activity-text">Internal Audit finding <strong>IAF-034</strong> marked <span class="badge badge-closed">Closed</span> by Finance Dept</div>
+              <div class="activity-time">21 May 2026, 11:05</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon compliance">✅</div>
+            <div class="activity-content">
+              <div class="activity-text">PPDPA compliance attestation submitted — 3 of 5 departments completed</div>
+              <div class="activity-time">20 May 2026, 08:50</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon incident">🚨</div>
+            <div class="activity-content">
+              <div class="activity-text">Incident <strong>INC-2026-042</strong> — Procurement irregularity reported, status <span class="badge badge-investigating">Investigating</span></div>
+              <div class="activity-time">19 May 2026, 14:22</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

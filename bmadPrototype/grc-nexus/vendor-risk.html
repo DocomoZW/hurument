@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRC-Nexus | Vendor Risk</title>
+  <script>if(localStorage.getItem('grc-theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');}</script>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="app-wrapper">
+
+  <nav class="topnav">
+    <button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Toggle Sidebar">☰</button>
+    <span class="topnav-logo">⚡ GRC-NEXUS</span>
+    <span class="topnav-brand">Ministry of Finance — Zimbabwe</span>
+    <div class="topnav-actions">
+      <button class="theme-toggle-btn" id="theme-btn" onclick="toggleDarkMode()" title="Toggle Dark Mode">🌙</button>
+      <div class="topnav-icon" title="Notifications">🔔<span style="position:absolute;background:var(--danger);color:#fff;border-radius:50%;font-size:9px;padding:1px 4px;margin-top:-8px;margin-left:6px;">5</span></div>
+      <div class="topnav-avatar" title="Tendai M.">TM</div>
+      <span class="topnav-user">Tendai M.</span>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-section-label">Navigation</div>
+      <ul class="sidebar-nav">
+        <li><a href="index.html" title="Dashboard"><span class="nav-icon">🏠</span> Dashboard</a></li>
+        <li><a href="strategic-planning.html" title="Strategic Planning"><span class="nav-icon">📊</span> Strategic Planning</a></li>
+        <li><a href="risk-register.html" title="Risk Management"><span class="nav-icon">⚠️</span> Risk Management</a></li>
+        <li><a href="board-management.html" title="Board Governance"><span class="nav-icon">👥</span> Board Governance</a></li>
+        <li><a href="compliance.html" title="Compliance"><span class="nav-icon">✅</span> Compliance</a></li>
+        <li><a href="incidents.html" title="Incidents"><span class="nav-icon">🚨</span> Incidents</a></li>
+        <li><a href="internal-audit.html" title="Internal Audit"><span class="nav-icon">🔍</span> Internal Audit</a></li>
+        <li><a href="vendor-risk.html" title="Vendor Risk"><span class="nav-icon">🏢</span> Vendor Risk</a></li>
+        <li><a href="reports.html" title="Reports"><span class="nav-icon">📈</span> Reports</a></li>
+      </ul>
+      <div class="sidebar-footer">GRC-Nexus v2.1<br>NDS2 Aligned Platform</div>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html" class="breadcrumb-link">Dashboard</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current">Vendor Risk</span>
+      </div>
+      <div class="page-header">
+        <div class="page-title">Vendor &amp; Third-Party Risk</div>
+        <div class="page-subtitle">Supplier Registry, Risk Tiers &amp; Compliance | Ministry of Finance</div>
+      </div>
+
+      <!-- Tier Summary -->
+      <div class="tier-summary">
+        <div class="tier-item tier-critical">
+          <div class="tier-count">3</div>
+          <div class="tier-label">Critical Tier</div>
+          <div class="tier-sub">Highest dependency</div>
+        </div>
+        <div class="tier-item tier-high">
+          <div class="tier-count">5</div>
+          <div class="tier-label">High Tier</div>
+          <div class="tier-sub">Significant dependency</div>
+        </div>
+        <div class="tier-item tier-medium">
+          <div class="tier-count">8</div>
+          <div class="tier-label">Medium Tier</div>
+          <div class="tier-sub">Moderate dependency</div>
+        </div>
+        <div class="tier-item tier-low">
+          <div class="tier-count">12</div>
+          <div class="tier-label">Low Tier</div>
+          <div class="tier-sub">Limited impact</div>
+        </div>
+      </div>
+
+      <!-- Filter & Table -->
+      <div class="filter-bar">
+        <label class="filter-label">Tier:</label>
+        <select class="filter-select" onchange="filterTable('vendor-tbody', [{colIndex:2, value:this.value}])">
+          <option value="all">All</option>
+          <option value="Critical">Critical</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+        <label class="filter-label" style="margin-left:16px;">Status:</label>
+        <select class="filter-select" onchange="filterTable('vendor-tbody', [{colIndex:6, value:this.value}])">
+          <option value="all">All</option>
+          <option value="Active">Active</option>
+          <option value="Under Review">Under Review</option>
+          <option value="Suspended">Suspended</option>
+        </select>
+      </div>
+
+      <div class="card" style="padding:0;">
+        <table id="vendor-table" class="data-table">
+          <thead>
+            <tr>
+              <th>Vendor ID</th>
+              <th>Vendor Name</th>
+              <th>Tier</th>
+              <th>Category</th>
+              <th class="sortable">Risk Score <span class="sort-icon">↕</span></th>
+              <th class="sortable">Contract Expiry <span class="sort-icon">↕</span></th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="vendor-tbody">
+            <tr>
+              <td>VND-001</td><td>Econet Wireless Zimbabwe</td>
+              <td><span class="badge badge-critical">Critical</span></td>
+              <td>ICT / Connectivity</td><td>88/100</td>
+              <td>31 Dec 2026</td>
+              <td><span class="badge badge-closed">Active</span></td>
+              <td><button class="btn-link" onclick="openPanel('vendor-panel')">Details</button></td>
+            </tr>
+            <tr>
+              <td>VND-002</td><td>IDBZ (Infrastructure Dev Bank)</td>
+              <td><span class="badge badge-critical">Critical</span></td>
+              <td>Financial Services</td><td>82/100</td>
+              <td>30 Jun 2027</td>
+              <td><span class="badge badge-closed">Active</span></td>
+              <td><button class="btn-link" onclick="openPanel('vendor-panel')">Details</button></td>
+            </tr>
+            <tr>
+              <td>VND-003</td><td>Oracle Zimbabwe (IFMIS)</td>
+              <td><span class="badge badge-critical">Critical</span></td>
+              <td>Software / ERP</td><td>79/100</td>
+              <td>31 Mar 2027</td>
+              <td><span class="badge badge-investigating">Under Review</span></td>
+              <td><button class="btn-link" onclick="openPanel('vendor-panel')">Details</button></td>
+            </tr>
+            <tr>
+              <td>VND-004</td><td>Deloitte Zimbabwe</td>
+              <td><span class="badge badge-high">High</span></td>
+              <td>Audit &amp; Advisory</td><td>65/100</td>
+              <td>31 Aug 2026</td>
+              <td><span class="badge badge-closed">Active</span></td>
+              <td><button class="btn-link" onclick="openPanel('vendor-panel')">Details</button></td>
+            </tr>
+            <tr>
+              <td>VND-005</td><td>Liquid Intelligent Technologies</td>
+              <td><span class="badge badge-high">High</span></td>
+              <td>ICT / Cloud</td><td>60/100</td>
+              <td>30 Nov 2026</td>
+              <td><span class="badge badge-closed">Active</span></td>
+              <td><button class="btn-link" onclick="openPanel('vendor-panel')">Details</button></td>
+            </tr>
+            <tr>
+              <td>VND-006</td><td>ZB Bank</td>
+              <td><span class="badge badge-high">High</span></td>
+              <td>Financial Services</td><td>58/100</td>
+              <td>31 Dec 2026</td>
+              <td><span class="badge badge-closed">Active</span></td>
+              <td><button class="btn-link" onclick="openPanel('vendor-panel')">Details</button></td>
+            </tr>
+            <tr>
+              <td>VND-007</td><td>First Mutual Life</td>
+              <td><span class="badge badge-medium">Medium</span></td>
+              <td>Insurance</td><td>45/100</td>
+              <td>31 Jan 2027</td>
+              <td><span class="badge badge-closed">Active</span></td>
+              <td><button class="btn-link" onclick="openPanel('vendor-panel')">Details</button></td>
+            </tr>
+            <tr>
+              <td>VND-008</td><td>POSB (Post Office Savings Bank)</td>
+              <td><span class="badge badge-medium">Medium</span></td>
+              <td>Financial Services</td><td>42/100</td>
+              <td>30 Sep 2026</td>
+              <td><span class="badge badge-closed">Active</span></td>
+              <td><button class="btn-link" onclick="openPanel('vendor-panel')">Details</button></td>
+            </tr>
+            <tr>
+              <td>VND-009</td><td>National Printing &amp; Packaging</td>
+              <td><span class="badge badge-low">Low</span></td>
+              <td>Stationery / Print</td><td>22/100</td>
+              <td>31 Oct 2026</td>
+              <td><span class="badge badge-investigating">Under Review</span></td>
+              <td><button class="btn-link" onclick="openPanel('vendor-panel')">Details</button></td>
+            </tr>
+            <tr>
+              <td>VND-010</td><td>Allied Timbers Zimbabwe</td>
+              <td><span class="badge badge-low">Low</span></td>
+              <td>Facilities / Furniture</td><td>18/100</td>
+              <td>30 Jun 2026</td>
+              <td><span class="badge badge-open">Suspended</span></td>
+              <td><button class="btn-link" onclick="openPanel('vendor-panel')">Details</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Vendor Detail Panel -->
+<div class="panel-overlay" id="vendor-panel">
+  <div class="side-panel">
+    <div class="panel-header">
+      <div class="panel-title">Vendor Detail — VND-001</div>
+      <button class="panel-close" onclick="closePanel('vendor-panel')">✕</button>
+    </div>
+    <div class="panel-body">
+      <div class="panel-meta-grid">
+        <div><div class="panel-meta-label">Vendor ID</div><div class="panel-meta-val">VND-001</div></div>
+        <div><div class="panel-meta-label">Vendor Name</div><div class="panel-meta-val">Econet Wireless Zimbabwe</div></div>
+        <div><div class="panel-meta-label">Tier</div><div class="panel-meta-val"><span class="badge badge-critical">Critical</span></div></div>
+        <div><div class="panel-meta-label">Risk Score</div><div class="panel-meta-val">88 / 100</div></div>
+        <div><div class="panel-meta-label">Contract Expiry</div><div class="panel-meta-val">31 Dec 2026</div></div>
+        <div><div class="panel-meta-label">Contract Owner</div><div class="panel-meta-val">T. Makoni</div></div>
+      </div>
+      <div class="panel-section-title">Compliance Checklist</div>
+      <div class="check-list">
+        <div class="check-item"><span class="check-status done">✓</span> PPDPA Data Processing Agreement in place</div>
+        <div class="check-item"><span class="check-status done">✓</span> Annual due diligence assessment completed (Jan 2026)</div>
+        <div class="check-item"><span class="check-status done">✓</span> SLA performance reviewed — 99.2% uptime (Q1 2026)</div>
+        <div class="check-item"><span class="check-status pending">○</span> Cybersecurity audit — due Q3 2026 (not yet scheduled)</div>
+        <div class="check-item"><span class="check-status pending">○</span> Business continuity plan reviewed by Ministry — overdue</div>
+      </div>
+      <div class="panel-section-title">Contract Obligations</div>
+      <div style="font-size:12px;color:#3D5166;line-height:1.8;">
+        <div>• Monthly uptime SLA: 99.5% (currently at 99.2% — <span style="color:#E67E22;">Warning</span>)</div>
+        <div>• Incident response: 4-hour SLA for P1 issues</div>
+        <div>• Data sovereignty: All data must remain within Zimbabwe or RDC-compliant facilities</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

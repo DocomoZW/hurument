@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRC-Nexus | Board Governance</title>
+  <script>if(localStorage.getItem('grc-theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');}</script>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="app-wrapper">
+
+  <nav class="topnav">
+    <button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Toggle Sidebar">☰</button>
+    <span class="topnav-logo">⚡ GRC-NEXUS</span>
+    <span class="topnav-brand">Ministry of Finance — Zimbabwe</span>
+    <div class="topnav-actions">
+      <button class="theme-toggle-btn" id="theme-btn" onclick="toggleDarkMode()" title="Toggle Dark Mode">🌙</button>
+      <div class="topnav-icon" title="Notifications">🔔<span style="position:absolute;background:var(--danger);color:#fff;border-radius:50%;font-size:9px;padding:1px 4px;margin-top:-8px;margin-left:6px;">5</span></div>
+      <div class="topnav-avatar" title="Tendai M.">TM</div>
+      <span class="topnav-user">Tendai M.</span>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-section-label">Navigation</div>
+      <ul class="sidebar-nav">
+        <li><a href="index.html" title="Dashboard"><span class="nav-icon">🏠</span> Dashboard</a></li>
+        <li><a href="strategic-planning.html" title="Strategic Planning"><span class="nav-icon">📊</span> Strategic Planning</a></li>
+        <li><a href="risk-register.html" title="Risk Management"><span class="nav-icon">⚠️</span> Risk Management</a></li>
+        <li><a href="board-management.html" title="Board Governance"><span class="nav-icon">👥</span> Board Governance</a></li>
+        <li><a href="compliance.html" title="Compliance"><span class="nav-icon">✅</span> Compliance</a></li>
+        <li><a href="incidents.html" title="Incidents"><span class="nav-icon">🚨</span> Incidents</a></li>
+        <li><a href="internal-audit.html" title="Internal Audit"><span class="nav-icon">🔍</span> Internal Audit</a></li>
+        <li><a href="vendor-risk.html" title="Vendor Risk"><span class="nav-icon">🏢</span> Vendor Risk</a></li>
+        <li><a href="reports.html" title="Reports"><span class="nav-icon">📈</span> Reports</a></li>
+      </ul>
+      <div class="sidebar-footer">GRC-Nexus v2.1<br>NDS2 Aligned Platform</div>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html" class="breadcrumb-link">Dashboard</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current">Board Governance</span>
+      </div>
+      <div class="page-header">
+        <div class="page-title">Board Governance &amp; Action Tracker</div>
+        <div class="page-subtitle">Meetings, Resolutions &amp; Outstanding Actions | Ministry of Finance</div>
+      </div>
+
+      <div class="tabs-container">
+        <div class="tabs-nav">
+          <button class="tab-btn">Board Meetings</button>
+          <button class="tab-btn">Action Tracker</button>
+        </div>
+
+        <!-- Tab 1: Board Meetings -->
+        <div class="tab-content">
+          <div class="card" style="padding:0;">
+            <table id="meetings-table" class="data-table">
+              <thead>
+                <tr>
+                  <th class="sortable">Meeting ID <span class="sort-icon">↕</span></th>
+                  <th>Type</th>
+                  <th class="sortable">Date <span class="sort-icon">↕</span></th>
+                  <th>Venue</th>
+                  <th>Quorum</th>
+                  <th>Resolutions</th>
+                  <th>Status</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>BM-2026-04</td><td>Ordinary</td><td>15 May 2026</td>
+                  <td>Board Room A, MOF HQ</td><td>7/9 ✓</td><td>5</td>
+                  <td><span class="badge badge-closed">Minutes Approved</span></td>
+                  <td><button class="btn-link" onclick="toggleMeetingDetail('bm04')">Expand ▾</button></td>
+                </tr>
+                <tr id="bm04-detail" class="meeting-detail-row" style="display:none;">
+                  <td colspan="8">
+                    <div class="meeting-detail-panel">
+                      <div class="meeting-detail-section">
+                        <strong>Agenda:</strong>
+                        <ol><li>Q1 Financial Performance Review</li><li>NDS2 Milestone Update</li><li>Audit Committee Report</li><li>Risk Escalations — RISK-001, RISK-002</li><li>Any Other Business</li></ol>
+                      </div>
+                      <div class="meeting-detail-section">
+                        <strong>Documents:</strong>
+                        <span class="doc-chip">📄 Q1-Financials.pdf</span>
+                        <span class="doc-chip">📄 Risk-Report-Q1.pdf</span>
+                        <span class="doc-chip">📄 NDS2-Tracker.xlsx</span>
+                      </div>
+                      <div class="meeting-detail-section">
+                        <strong>Resolutions:</strong>
+                        <ul>
+                          <li>BR-2026-14: Approved supplementary budget allocation of ZWG 4.2bn</li>
+                          <li>BR-2026-15: Directed Audit Committee to commission cybersecurity review by 30 Jun 2026</li>
+                          <li>BR-2026-16: Noted NDS2 Pillar 1 progress and requested corrective action plan</li>
+                          <li>BR-2026-17: Endorsed revised procurement policy framework</li>
+                          <li>BR-2026-18: Approved Q2 budget revision</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>BM-2026-03</td><td>Special</td><td>10 Apr 2026</td>
+                  <td>Virtual (MS Teams)</td><td>8/9 ✓</td><td>2</td>
+                  <td><span class="badge badge-closed">Minutes Approved</span></td>
+                  <td><button class="btn-link" onclick="toggleMeetingDetail('bm03')">Expand ▾</button></td>
+                </tr>
+                <tr id="bm03-detail" class="meeting-detail-row" style="display:none;">
+                  <td colspan="8">
+                    <div class="meeting-detail-panel">
+                      <div class="meeting-detail-section">
+                        <strong>Agenda:</strong>
+                        <ol><li>Emergency — Treasury Bill Rollover Approval</li><li>ZIMRE Solvency Update</li></ol>
+                      </div>
+                      <div class="meeting-detail-section">
+                        <strong>Resolutions:</strong>
+                        <ul>
+                          <li>BR-2026-12: Approved ZWG 2.8bn Treasury Bill rollover</li>
+                          <li>BR-2026-13: Directed ZIMRE capitalisation plan submission within 30 days</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>BM-2026-02</td><td>Ordinary</td><td>12 Feb 2026</td>
+                  <td>Board Room A, MOF HQ</td><td>9/9 ✓</td><td>4</td>
+                  <td><span class="badge badge-closed">Minutes Approved</span></td>
+                  <td><button class="btn-link" onclick="toggleMeetingDetail('bm02')">Expand ▾</button></td>
+                </tr>
+                <tr id="bm02-detail" class="meeting-detail-row" style="display:none;">
+                  <td colspan="8">
+                    <div class="meeting-detail-panel">
+                      <div class="meeting-detail-section">
+                        <strong>Agenda:</strong>
+                        <ol><li>Annual Financial Statements 2025</li><li>Risk Register Review</li><li>NDS2 Baseline Setting</li><li>Board Committee Reports</li></ol>
+                      </div>
+                      <div class="meeting-detail-section">
+                        <strong>Resolutions:</strong>
+                        <ul>
+                          <li>BR-2026-08: Adopted 2025 Annual Financial Statements</li>
+                          <li>BR-2026-09: Approved updated Enterprise Risk Management Framework</li>
+                          <li>BR-2026-10: Endorsed NDS2 KPI baselines</li>
+                          <li>BR-2026-11: Approved Board Committee work plans</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>BM-2026-01</td><td>Ordinary</td><td>15 Jan 2026</td>
+                  <td>Board Room B, MOF HQ</td><td>7/9 ✓</td><td>3</td>
+                  <td><span class="badge badge-closed">Minutes Approved</span></td>
+                  <td><button class="btn-link" onclick="toggleMeetingDetail('bm01')">Expand ▾</button></td>
+                </tr>
+                <tr id="bm01-detail" class="meeting-detail-row" style="display:none;">
+                  <td colspan="8">
+                    <div class="meeting-detail-panel">
+                      <div class="meeting-detail-section">
+                        <strong>Agenda:</strong>
+                        <ol><li>Induction of New Board Members</li><li>Work Plan 2026 Approval</li><li>Q4 2025 Performance Review</li></ol>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tab 2: Action Tracker -->
+        <div class="tab-content">
+          <div class="filter-bar">
+            <label class="filter-label">Status:</label>
+            <select class="filter-select" onchange="filterTable('action-tbody', [{colIndex:5, value:this.value}])">
+              <option value="all">All</option>
+              <option value="Overdue">Overdue</option>
+              <option value="Pending">Pending</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+          <div class="card" style="padding:0;">
+            <table id="action-table" class="data-table">
+              <thead>
+                <tr>
+                  <th>Action Ref</th>
+                  <th>Meeting</th>
+                  <th>Action Description</th>
+                  <th>Owner</th>
+                  <th class="sortable">Due Date <span class="sort-icon">↕</span></th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="action-tbody">
+                <tr>
+                  <td>BR-2026-15-A1</td><td>BM-2026-04</td>
+                  <td>Commission cybersecurity review — POTRAZ engagement</td>
+                  <td>T. Makoni</td><td>30 Jun 2026</td>
+                  <td><span class="badge badge-pending">Pending</span></td>
+                </tr>
+                <tr>
+                  <td>BR-2026-16-A1</td><td>BM-2026-04</td>
+                  <td>Submit NDS2 Pillar 1 corrective action plan to PS</td>
+                  <td>P. Ndoro</td><td>15 Jun 2026</td>
+                  <td><span class="badge badge-pending">Pending</span></td>
+                </tr>
+                <tr>
+                  <td>BR-2026-13-A1</td><td>BM-2026-03</td>
+                  <td>Submit ZIMRE capitalisation plan to Board Secretariat</td>
+                  <td>M. Dube</td><td>10 May 2026</td>
+                  <td><span class="badge badge-overdue">Overdue</span></td>
+                </tr>
+                <tr>
+                  <td>BR-2026-09-A1</td><td>BM-2026-02</td>
+                  <td>Circulate updated ERM Framework to all HODs</td>
+                  <td>T. Moyo</td><td>28 Feb 2026</td>
+                  <td><span class="badge badge-closed">Completed</span></td>
+                </tr>
+                <tr>
+                  <td>BR-2026-10-A1</td><td>BM-2026-02</td>
+                  <td>Load NDS2 baselines into GRC-Nexus system</td>
+                  <td>N. Zimba</td><td>15 Mar 2026</td>
+                  <td><span class="badge badge-closed">Completed</span></td>
+                </tr>
+                <tr>
+                  <td>BR-2026-14-A1</td><td>BM-2026-04</td>
+                  <td>Process supplementary budget allocation warrants for infrastructure</td>
+                  <td>S. Choto</td><td>31 May 2026</td>
+                  <td><span class="badge badge-overdue">Overdue</span></td>
+                </tr>
+                <tr>
+                  <td>BR-2026-17-A1</td><td>BM-2026-04</td>
+                  <td>Gazette revised procurement policy framework</td>
+                  <td>C. Mwale</td><td>30 Jul 2026</td>
+                  <td><span class="badge badge-pending">Pending</span></td>
+                </tr>
+                <tr>
+                  <td>BR-2026-11-A1</td><td>BM-2026-02</td>
+                  <td>Publish Board Committee work plans on Ministry intranet</td>
+                  <td>F. Sithole</td><td>28 Feb 2026</td>
+                  <td><span class="badge badge-closed">Completed</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+<script>
+function toggleMeetingDetail(id) {
+  const row = document.getElementById(id + '-detail');
+  if (!row) return;
+  row.style.display = row.style.display === 'none' ? '' : 'none';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRC-Nexus | Risk Management</title>
+  <script>if(localStorage.getItem('grc-theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');}</script>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="app-wrapper">
+
+  <!-- Top Nav -->
+  <nav class="topnav">
+    <button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Toggle Sidebar">☰</button>
+    <span class="topnav-logo">⚡ GRC-NEXUS</span>
+    <span class="topnav-brand">Ministry of Finance — Zimbabwe</span>
+    <div class="topnav-actions">
+      <button class="theme-toggle-btn" id="theme-btn" onclick="toggleDarkMode()" title="Toggle Dark Mode">🌙</button>
+      <div class="topnav-icon" title="Notifications">🔔<span style="position:absolute;background:var(--danger);color:#fff;border-radius:50%;font-size:9px;padding:1px 4px;margin-top:-8px;margin-left:6px;">5</span></div>
+      <div class="topnav-avatar" title="Tendai M.">TM</div>
+      <span class="topnav-user">Tendai M.</span>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-section-label">Navigation</div>
+      <ul class="sidebar-nav">
+        <li><a href="index.html" title="Dashboard"><span class="nav-icon">🏠</span> Dashboard</a></li>
+        <li><a href="strategic-planning.html" title="Strategic Planning"><span class="nav-icon">📊</span> Strategic Planning</a></li>
+        <li><a href="risk-register.html" title="Risk Management"><span class="nav-icon">⚠️</span> Risk Management</a></li>
+        <li><a href="board-management.html" title="Board Governance"><span class="nav-icon">👥</span> Board Governance</a></li>
+        <li><a href="compliance.html" title="Compliance"><span class="nav-icon">✅</span> Compliance</a></li>
+        <li><a href="incidents.html" title="Incidents"><span class="nav-icon">🚨</span> Incidents</a></li>
+        <li><a href="internal-audit.html" title="Internal Audit"><span class="nav-icon">🔍</span> Internal Audit</a></li>
+        <li><a href="vendor-risk.html" title="Vendor Risk"><span class="nav-icon">🏢</span> Vendor Risk</a></li>
+        <li><a href="reports.html" title="Reports"><span class="nav-icon">📈</span> Reports</a></li>
+      </ul>
+      <div class="sidebar-footer">GRC-Nexus v2.1<br>NDS2 Aligned Platform</div>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html" class="breadcrumb-link">Dashboard</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current">Risk Management</span>
+      </div>
+      <div class="page-header">
+        <div class="page-title">Enterprise Risk Register</div>
+        <div class="page-subtitle">23 open risks | Ministry of Finance — Zimbabwe</div>
+      </div>
+
+      <!-- Heatmap + Filter Side by Side -->
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title"><span class="card-title-icon">⚠️</span> Risk Heatmap (Current Quarter)</div>
+          <div class="heatmap-wrap">
+            <div class="heatmap-svg-container">
+              <svg viewBox="0 0 310 290" width="310" height="290" xmlns="http://www.w3.org/2000/svg">
+                <text x="5" y="145" font-size="10" fill="#6B7C93" transform="rotate(-90,12,145)" text-anchor="middle">Likelihood →</text>
+                <text x="165" y="288" font-size="10" fill="#6B7C93" text-anchor="middle">Impact →</text>
+                <text x="55"  y="18" font-size="10" fill="#6B7C93" text-anchor="middle">1</text>
+                <text x="105" y="18" font-size="10" fill="#6B7C93" text-anchor="middle">2</text>
+                <text x="155" y="18" font-size="10" fill="#6B7C93" text-anchor="middle">3</text>
+                <text x="205" y="18" font-size="10" fill="#6B7C93" text-anchor="middle">4</text>
+                <text x="255" y="18" font-size="10" fill="#6B7C93" text-anchor="middle">5</text>
+                <text x="28" y="48"  font-size="10" fill="#6B7C93" text-anchor="middle">5</text>
+                <text x="28" y="98"  font-size="10" fill="#6B7C93" text-anchor="middle">4</text>
+                <text x="28" y="148" font-size="10" fill="#6B7C93" text-anchor="middle">3</text>
+                <text x="28" y="198" font-size="10" fill="#6B7C93" text-anchor="middle">2</text>
+                <text x="28" y="248" font-size="10" fill="#6B7C93" text-anchor="middle">1</text>
+                <!-- Grid rows -->
+                <rect x="30" y="22" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="80" y="22" width="50" height="50" fill="#FDF2E5" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="130" y="22" width="50" height="50" fill="#FDF2E5" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="180" y="22" width="50" height="50" fill="#FCE8E8" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="230" y="22" width="50" height="50" fill="#FCE8E8" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="30"  y="72" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="80"  y="72" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="130" y="72" width="50" height="50" fill="#FDF2E5" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="180" y="72" width="50" height="50" fill="#FCE8E8" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="230" y="72" width="50" height="50" fill="#FCE8E8" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="30"  y="122" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="80"  y="122" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="130" y="122" width="50" height="50" fill="#FDF2E5" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="180" y="122" width="50" height="50" fill="#FDF2E5" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="230" y="122" width="50" height="50" fill="#FCE8E8" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="30"  y="172" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="80"  y="172" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="130" y="172" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="180" y="172" width="50" height="50" fill="#FDF2E5" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="230" y="172" width="50" height="50" fill="#FDF2E5" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="30"  y="222" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="80"  y="222" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="130" y="222" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="180" y="222" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <rect x="230" y="222" width="50" height="50" fill="#EAFAF0" stroke="#DDE3EC" stroke-width="0.5"/>
+                <!-- Risk dots -->
+                <circle cx="255" cy="97" r="14" fill="#C0392B" opacity="0.9" style="cursor:pointer;" onclick="openPanel('risk-panel')"/>
+                <text x="255" y="101" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold" style="pointer-events:none;">R-001</text>
+                <circle cx="205" cy="47" r="14" fill="#C0392B" opacity="0.9" style="cursor:pointer;" onclick="openPanel('risk-panel')"/>
+                <text x="205" y="51" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold" style="pointer-events:none;">R-002</text>
+                <circle cx="205" cy="147" r="14" fill="#E67E22" opacity="0.9" style="cursor:pointer;" onclick="openPanel('risk-panel')"/>
+                <text x="205" y="151" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold" style="pointer-events:none;">R-003</text>
+                <circle cx="155" cy="147" r="14" fill="#E67E22" opacity="0.9" style="cursor:pointer;" onclick="openPanel('risk-panel')"/>
+                <text x="155" y="151" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold" style="pointer-events:none;">R-004</text>
+                <circle cx="205" cy="197" r="14" fill="#E67E22" opacity="0.9" style="cursor:pointer;" onclick="openPanel('risk-panel')"/>
+                <text x="205" y="201" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold" style="pointer-events:none;">R-005</text>
+                <circle cx="105" cy="197" r="14" fill="#27AE60" opacity="0.9" style="cursor:pointer;" onclick="openPanel('risk-panel')"/>
+                <text x="105" y="201" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold" style="pointer-events:none;">R-006</text>
+              </svg>
+            </div>
+            <div class="heatmap-legend">
+              <div class="heatmap-legend-item"><div class="heatmap-legend-color" style="background:#FCE8E8;border:1px solid #F5B7B1;"></div> Critical</div>
+              <div class="heatmap-legend-item"><div class="heatmap-legend-color" style="background:#FDF2E5;border:1px solid #FAD7A0;"></div> High</div>
+              <div class="heatmap-legend-item"><div class="heatmap-legend-color" style="background:#EAFAF0;border:1px solid #A9DFBF;"></div> Low/Med</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="card-title-icon">🔢</span> Risk Summary by Category</div>
+          <svg viewBox="0 0 260 180" width="100%" height="180" xmlns="http://www.w3.org/2000/svg">
+            <text x="130" y="14" font-size="11" fill="#1C2B3A" font-weight="600" text-anchor="middle">Open Risks by Category</text>
+            <!-- Bars (horizontal) -->
+            <text x="10" y="45"  font-size="10" fill="#3D5166">Financial</text>
+            <rect x="90" y="30" width="104" height="18" fill="#C0392B" rx="2"/>
+            <text x="200" y="43" font-size="10" fill="#C0392B" font-weight="700">8</text>
+            <text x="10" y="75"  font-size="10" fill="#3D5166">Operational</text>
+            <rect x="90" y="60" width="78" height="18" fill="#E67E22" rx="2"/>
+            <text x="174" y="73" font-size="10" fill="#E67E22" font-weight="700">6</text>
+            <text x="10" y="105" font-size="10" fill="#3D5166">Regulatory</text>
+            <rect x="90" y="90" width="52" height="18" fill="#E67E22" rx="2"/>
+            <text x="148" y="103" font-size="10" fill="#E67E22" font-weight="700">4</text>
+            <text x="10" y="135" font-size="10" fill="#3D5166">Reputational</text>
+            <rect x="90" y="120" width="39" height="18" fill="#2980B9" rx="2"/>
+            <text x="135" y="133" font-size="10" fill="#2980B9" font-weight="700">3</text>
+            <text x="10" y="165" font-size="10" fill="#3D5166">Cyber</text>
+            <rect x="90" y="150" width="26" height="18" fill="#27AE60" rx="2"/>
+            <text x="122" y="163" font-size="10" fill="#27AE60" font-weight="700">2</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <label class="filter-label">Rating:</label>
+        <select class="filter-select" id="filter-rating" onchange="filterTable('risk-tbody', [{colIndex:5, value:this.value},{colIndex:1, value:document.getElementById('filter-cat').value}])">
+          <option value="all">All</option>
+          <option value="Critical">Critical</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+        <label class="filter-label" style="margin-left:16px;">Category:</label>
+        <select class="filter-select" id="filter-cat" onchange="filterTable('risk-tbody', [{colIndex:5, value:document.getElementById('filter-rating').value},{colIndex:1, value:this.value}])">
+          <option value="all">All Categories</option>
+          <option value="Financial">Financial</option>
+          <option value="Operational">Operational</option>
+          <option value="Regulatory">Regulatory</option>
+          <option value="Reputational">Reputational</option>
+          <option value="Cyber">Cyber</option>
+        </select>
+      </div>
+
+      <!-- Risk Register Table -->
+      <div class="card" style="padding:0;">
+        <table id="risk-table" class="data-table">
+          <thead>
+            <tr>
+              <th class="sortable">Risk ID <span class="sort-icon">↕</span></th>
+              <th>Category</th>
+              <th>Risk Description</th>
+              <th class="sortable">Likelihood <span class="sort-icon">↕</span></th>
+              <th class="sortable">Impact <span class="sort-icon">↕</span></th>
+              <th class="sortable">Score <span class="sort-icon">↕</span></th>
+              <th>Rating</th>
+              <th>Owner</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="risk-tbody">
+            <tr>
+              <td>RISK-001</td><td>Cyber</td>
+              <td>Unauthorised system access via weak MDA network controls</td>
+              <td>4</td><td>5</td><td>20</td>
+              <td><span class="badge badge-critical">Critical</span></td>
+              <td>T. Makoni</td><td><span class="badge badge-open">Open</span></td>
+              <td><button class="btn-link" onclick="openPanel('risk-panel')">View</button></td>
+            </tr>
+            <tr>
+              <td>RISK-002</td><td>Financial</td>
+              <td>Revenue shortfall due to informal sector non-compliance with ZIMRA</td>
+              <td>5</td><td>4</td><td>20</td>
+              <td><span class="badge badge-critical">Critical</span></td>
+              <td>S. Choto</td><td><span class="badge badge-open">Open</span></td>
+              <td><button class="btn-link" onclick="openPanel('risk-panel')">View</button></td>
+            </tr>
+            <tr>
+              <td>RISK-003</td><td>Operational</td>
+              <td>Procurement delays impacting infrastructure project timelines</td>
+              <td>3</td><td>4</td><td>12</td>
+              <td><span class="badge badge-high">High</span></td>
+              <td>P. Ndoro</td><td><span class="badge badge-mitigating">Mitigating</span></td>
+              <td><button class="btn-link" onclick="openPanel('risk-panel')">View</button></td>
+            </tr>
+            <tr>
+              <td>RISK-004</td><td>Financial</td>
+              <td>Currency depreciation exposure on USD-denominated debt obligations</td>
+              <td>3</td><td>3</td><td>9</td>
+              <td><span class="badge badge-high">High</span></td>
+              <td>T. Moyo</td><td><span class="badge badge-open">Open</span></td>
+              <td><button class="btn-link" onclick="openPanel('risk-panel')">View</button></td>
+            </tr>
+            <tr>
+              <td>RISK-005</td><td>Regulatory</td>
+              <td>Non-compliance with PPDPA data protection obligations across MDAs</td>
+              <td>2</td><td>4</td><td>8</td>
+              <td><span class="badge badge-medium">Medium</span></td>
+              <td>N. Zimba</td><td><span class="badge badge-mitigating">Mitigating</span></td>
+              <td><button class="btn-link" onclick="openPanel('risk-panel')">View</button></td>
+            </tr>
+            <tr>
+              <td>RISK-006</td><td>Reputational</td>
+              <td>Public perception risk from delayed social welfare disbursements</td>
+              <td>2</td><td>2</td><td>4</td>
+              <td><span class="badge badge-low">Low</span></td>
+              <td>B. Chirwa</td><td><span class="badge badge-open">Open</span></td>
+              <td><button class="btn-link" onclick="openPanel('risk-panel')">View</button></td>
+            </tr>
+            <tr>
+              <td>RISK-007</td><td>Financial</td>
+              <td>Pension fund solvency risk due to underfunding of NSSA contributions</td>
+              <td>4</td><td>4</td><td>16</td>
+              <td><span class="badge badge-critical">Critical</span></td>
+              <td>M. Dube</td><td><span class="badge badge-open">Open</span></td>
+              <td><button class="btn-link" onclick="openPanel('risk-panel')">View</button></td>
+            </tr>
+            <tr>
+              <td>RISK-008</td><td>Operational</td>
+              <td>Staff capacity gaps in IFMIS operation across rural MDAs</td>
+              <td>3</td><td>3</td><td>9</td>
+              <td><span class="badge badge-medium">Medium</span></td>
+              <td>F. Sithole</td><td><span class="badge badge-mitigating">Mitigating</span></td>
+              <td><button class="btn-link" onclick="openPanel('risk-panel')">View</button></td>
+            </tr>
+            <tr>
+              <td>RISK-009</td><td>Regulatory</td>
+              <td>Failure to file quarterly RBZ monetary policy reports on time</td>
+              <td>2</td><td>3</td><td>6</td>
+              <td><span class="badge badge-medium">Medium</span></td>
+              <td>C. Mwale</td><td><span class="badge badge-open">Open</span></td>
+              <td><button class="btn-link" onclick="openPanel('risk-panel')">View</button></td>
+            </tr>
+            <tr>
+              <td>RISK-010</td><td>Operational</td>
+              <td>IT system downtime during peak budget submission window</td>
+              <td>3</td><td>3</td><td>9</td>
+              <td><span class="badge badge-medium">Medium</span></td>
+              <td>T. Makoni</td><td><span class="badge badge-accepted">Accepted</span></td>
+              <td><button class="btn-link" onclick="openPanel('risk-panel')">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Risk Detail Panel -->
+<div class="panel-overlay" id="risk-panel">
+  <div class="side-panel">
+    <div class="panel-header">
+      <div class="panel-title">Risk Detail — RISK-001</div>
+      <button class="panel-close" onclick="closePanel('risk-panel')">✕</button>
+    </div>
+    <div class="panel-body">
+      <div class="panel-meta-grid">
+        <div><div class="panel-meta-label">Risk ID</div><div class="panel-meta-val">RISK-001</div></div>
+        <div><div class="panel-meta-label">Category</div><div class="panel-meta-val">Cyber</div></div>
+        <div><div class="panel-meta-label">Owner</div><div class="panel-meta-val">T. Makoni</div></div>
+        <div><div class="panel-meta-label">Rating</div><div class="panel-meta-val"><span class="badge badge-critical">Critical</span></div></div>
+        <div><div class="panel-meta-label">Likelihood</div><div class="panel-meta-val">4 / 5</div></div>
+        <div><div class="panel-meta-label">Impact</div><div class="panel-meta-val">5 / 5</div></div>
+        <div><div class="panel-meta-label">Score</div><div class="panel-meta-val">20</div></div>
+        <div><div class="panel-meta-label">Status</div><div class="panel-meta-val"><span class="badge badge-open">Open</span></div></div>
+      </div>
+      <div class="panel-section-title">Description</div>
+      <p style="font-size:13px;color:#3D5166;line-height:1.6;">Unauthorised system access risk arising from weak MDA network perimeter controls, lack of multi-factor authentication, and unpatched legacy systems across the ministry's ICT estate.</p>
+      <div class="panel-section-title">Treatment Actions</div>
+      <div class="check-list">
+        <div class="check-item">
+          <span class="check-status done">✓</span>
+          <span class="check-text">Engage POTRAZ for MDA network security audit — <em>Completed 14 Mar 2026</em></span>
+        </div>
+        <div class="check-item">
+          <span class="check-status pending">○</span>
+          <span class="check-text">Implement MFA on all IFMIS access points — <em>Due: 30 Jun 2026</em></span>
+        </div>
+        <div class="check-item">
+          <span class="check-status pending">○</span>
+          <span class="check-text">Patch legacy Windows Server 2012 nodes — <em>Due: 15 Jul 2026</em></span>
+        </div>
+        <div class="check-item">
+          <span class="check-status pending">○</span>
+          <span class="check-text">Conduct quarterly penetration testing — <em>Next: 30 Aug 2026</em></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

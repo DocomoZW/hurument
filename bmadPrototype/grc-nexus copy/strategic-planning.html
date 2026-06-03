@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRC-Nexus | Strategic Planning</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="app-wrapper">
+
+  <!-- Top Nav -->
+  <nav class="topnav">
+    <span class="topnav-logo">⚡ GRC-NEXUS</span>
+    <span class="topnav-brand">Ministry of Finance — Zimbabwe</span>
+    <div class="topnav-actions">
+      <div class="topnav-icon" title="Notifications">🔔<span style="position:absolute;background:var(--danger);color:#fff;border-radius:50%;font-size:9px;padding:1px 4px;margin-top:-8px;margin-left:6px;">5</span></div>
+      <div class="topnav-avatar" title="Tendai M.">TM</div>
+      <span class="topnav-user">Tendai M.</span>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-section-label">Navigation</div>
+      <ul class="sidebar-nav">
+        <li><a href="index.html"><span class="nav-icon">🏠</span> Dashboard</a></li>
+        <li><a href="strategic-planning.html"><span class="nav-icon">📊</span> Strategic Planning</a></li>
+        <li><a href="risk-register.html"><span class="nav-icon">⚠️</span> Risk Management</a></li>
+        <li><a href="board-management.html"><span class="nav-icon">👥</span> Board Governance</a></li>
+        <li><a href="compliance.html"><span class="nav-icon">✅</span> Compliance</a></li>
+        <li><a href="incidents.html"><span class="nav-icon">🚨</span> Incidents</a></li>
+        <li><a href="internal-audit.html"><span class="nav-icon">🔍</span> Internal Audit</a></li>
+        <li><a href="vendor-risk.html"><span class="nav-icon">🏢</span> Vendor Risk</a></li>
+        <li><a href="reports.html"><span class="nav-icon">📈</span> Reports</a></li>
+      </ul>
+      <div class="sidebar-footer">GRC-Nexus v2.1<br>NDS2 Aligned Platform</div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html" class="breadcrumb-link">Dashboard</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current">Strategic Planning</span>
+      </div>
+      <div class="page-header">
+        <div class="page-title">Strategic Planning — NDS2 2026–2030</div>
+        <div class="page-subtitle">Pillars, Goals, Outputs & KPI Tracking | Ministry of Finance</div>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <label class="filter-label">Filter by Pillar:</label>
+        <select id="filter-pillar" class="filter-select" onchange="filterTable('sp-tbody', [{colIndex:0, value:this.value}])">
+          <option value="all">All Pillars</option>
+          <option value="Economic">Pillar 1 — Economic Transformation</option>
+          <option value="Social">Pillar 2 — Social Development</option>
+          <option value="Governance">Pillar 3 — Governance &amp; Institutions</option>
+        </select>
+        <label class="filter-label" style="margin-left:16px;">Filter by Status:</label>
+        <select id="filter-status" class="filter-select" onchange="filterByStatus()">
+          <option value="all">All Statuses</option>
+          <option value="On Track">On Track</option>
+          <option value="At Risk">At Risk</option>
+          <option value="Behind">Behind</option>
+        </select>
+      </div>
+
+      <!-- Strategic Plan Hierarchical Table -->
+      <div class="card" style="padding:0;">
+        <table id="sp-table" class="data-table">
+          <thead>
+            <tr>
+              <th style="min-width:130px;">Pillar / Area</th>
+              <th>Goal / Output</th>
+              <th class="sortable">Q1 Target <span class="sort-icon">↕</span></th>
+              <th class="sortable">Q1 Actual <span class="sort-icon">↕</span></th>
+              <th class="sortable">Q2 Target <span class="sort-icon">↕</span></th>
+              <th class="sortable">Q2 Actual <span class="sort-icon">↕</span></th>
+              <th>Status</th>
+              <th>KPI Trend</th>
+              <th>Owner</th>
+            </tr>
+          </thead>
+          <tbody id="sp-tbody">
+            <!-- Pillar 1 -->
+            <tr class="row-pillar"><td colspan="9">PILLAR 1 — ECONOMIC TRANSFORMATION AND GROWTH</td></tr>
+            <tr class="row-goal"><td>Economic</td><td>Goal 1.1 — Fiscal Consolidation</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr>
+              <td>Economic</td>
+              <td class="row-output">Output 1.1.1 — Budget deficit ≤ 3% of GDP</td>
+              <td>2.8%</td><td>3.1%</td><td>2.5%</td><td>2.6%</td>
+              <td><span class="badge badge-at-risk">At Risk</span></td>
+              <td><svg viewBox="0 0 60 30" width="60" height="30"><polyline points="0,20 15,22 30,18 45,24 60,21" fill="none" stroke="#E67E22" stroke-width="2"/></svg></td>
+              <td>T. Moyo</td>
+            </tr>
+            <tr>
+              <td>Economic</td>
+              <td class="row-output">Output 1.1.2 — Tax-to-GDP ratio ≥ 16%</td>
+              <td>16%</td><td>15.2%</td><td>16.5%</td><td>16.1%</td>
+              <td><span class="badge badge-on-track">On Track</span></td>
+              <td><svg viewBox="0 0 60 30" width="60" height="30"><polyline points="0,25 15,22 30,18 45,16 60,14" fill="none" stroke="#27AE60" stroke-width="2"/></svg></td>
+              <td>S. Choto</td>
+            </tr>
+            <tr class="row-goal"><td>Economic</td><td>Goal 1.2 — Infrastructure Investment</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr>
+              <td>Economic</td>
+              <td class="row-output">Output 1.2.1 — Capital expenditure ratio ≥ 25% of budget</td>
+              <td>25%</td><td>18%</td><td>26%</td><td>21%</td>
+              <td><span class="badge badge-behind">Behind</span></td>
+              <td><svg viewBox="0 0 60 30" width="60" height="30"><polyline points="0,10 15,15 30,18 45,20 60,22" fill="none" stroke="#C0392B" stroke-width="2"/></svg></td>
+              <td>P. Ndoro</td>
+            </tr>
+            <tr>
+              <td>Economic</td>
+              <td class="row-output">Output 1.2.2 — Public-private partnerships signed ≥ 12</td>
+              <td>3</td><td>4</td><td>6</td><td>5</td>
+              <td><span class="badge badge-on-track">On Track</span></td>
+              <td><svg viewBox="0 0 60 30" width="60" height="30"><polyline points="0,22 15,20 30,16 45,12 60,10" fill="none" stroke="#27AE60" stroke-width="2"/></svg></td>
+              <td>M. Dube</td>
+            </tr>
+            <!-- Pillar 2 -->
+            <tr class="row-pillar"><td colspan="9">PILLAR 2 — SOCIAL DEVELOPMENT AND INCLUSION</td></tr>
+            <tr class="row-goal"><td>Social</td><td>Goal 2.1 — Social Protection Expansion</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr>
+              <td>Social</td>
+              <td class="row-output">Output 2.1.1 — Beneficiaries enrolled in HSCT ≥ 320,000</td>
+              <td>280K</td><td>275K</td><td>300K</td><td>298K</td>
+              <td><span class="badge badge-on-track">On Track</span></td>
+              <td><svg viewBox="0 0 60 30" width="60" height="30"><polyline points="0,22 15,21 30,17 45,14 60,12" fill="none" stroke="#27AE60" stroke-width="2"/></svg></td>
+              <td>B. Chirwa</td>
+            </tr>
+            <tr>
+              <td>Social</td>
+              <td class="row-output">Output 2.1.2 — Health spending ≥ 10% of GDP</td>
+              <td>10%</td><td>8.4%</td><td>10%</td><td>8.9%</td>
+              <td><span class="badge badge-behind">Behind</span></td>
+              <td><svg viewBox="0 0 60 30" width="60" height="30"><polyline points="0,12 15,14 30,16 45,18 60,20" fill="none" stroke="#C0392B" stroke-width="2"/></svg></td>
+              <td>R. Banda</td>
+            </tr>
+            <tr class="row-goal"><td>Social</td><td>Goal 2.2 — Education Access</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr>
+              <td>Social</td>
+              <td class="row-output">Output 2.2.1 — Primary school completion rate ≥ 95%</td>
+              <td>93%</td><td>94%</td><td>94%</td><td>94.5%</td>
+              <td><span class="badge badge-on-track">On Track</span></td>
+              <td><svg viewBox="0 0 60 30" width="60" height="30"><polyline points="0,20 15,18 30,15 45,14 60,12" fill="none" stroke="#27AE60" stroke-width="2"/></svg></td>
+              <td>F. Sithole</td>
+            </tr>
+            <!-- Pillar 3 -->
+            <tr class="row-pillar"><td colspan="9">PILLAR 3 — GOVERNANCE, INSTITUTIONS AND ACCOUNTABILITY</td></tr>
+            <tr class="row-goal"><td>Governance</td><td>Goal 3.1 — Public Finance Management</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr>
+              <td>Governance</td>
+              <td class="row-output">Output 3.1.1 — PEFA score improvement ≥ 5 points</td>
+              <td>+2</td><td>+1</td><td>+4</td><td>+3</td>
+              <td><span class="badge badge-at-risk">At Risk</span></td>
+              <td><svg viewBox="0 0 60 30" width="60" height="30"><polyline points="0,22 15,21 30,18 45,16 60,15" fill="none" stroke="#E67E22" stroke-width="2"/></svg></td>
+              <td>T. Makoni</td>
+            </tr>
+            <tr>
+              <td>Governance</td>
+              <td class="row-output">Output 3.1.2 — MDAs submitting IFMIS reports on time ≥ 90%</td>
+              <td>85%</td><td>88%</td><td>88%</td><td>91%</td>
+              <td><span class="badge badge-on-track">On Track</span></td>
+              <td><svg viewBox="0 0 60 30" width="60" height="30"><polyline points="0,20 15,17 30,15 45,12 60,10" fill="none" stroke="#27AE60" stroke-width="2"/></svg></td>
+              <td>N. Zimba</td>
+            </tr>
+            <tr class="row-goal"><td>Governance</td><td>Goal 3.2 — Anti-Corruption Measures</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr>
+              <td>Governance</td>
+              <td class="row-output">Output 3.2.1 — Procurement irregularity cases reduced by 30%</td>
+              <td>−10%</td><td>−8%</td><td>−20%</td><td>−15%</td>
+              <td><span class="badge badge-at-risk">At Risk</span></td>
+              <td><svg viewBox="0 0 60 30" width="60" height="30"><polyline points="0,10 15,12 30,15 45,17 60,19" fill="none" stroke="#E67E22" stroke-width="2"/></svg></td>
+              <td>C. Mwale</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- KPI Detail Panel -->
+<div class="panel-overlay" id="kpi-panel">
+  <div class="side-panel">
+    <div class="panel-header">
+      <div class="panel-title">KPI Detail — Output 1.1.1</div>
+      <button class="panel-close" onclick="closePanel('kpi-panel')">✕</button>
+    </div>
+    <div class="panel-body">
+      <div class="panel-meta-grid">
+        <div><div class="panel-meta-label">Output</div><div class="panel-meta-val">Budget deficit ≤ 3% of GDP</div></div>
+        <div><div class="panel-meta-label">Owner</div><div class="panel-meta-val">T. Moyo</div></div>
+        <div><div class="panel-meta-label">Baseline</div><div class="panel-meta-val">4.1% (2025)</div></div>
+        <div><div class="panel-meta-label">Target 2030</div><div class="panel-meta-val">≤ 2.0%</div></div>
+      </div>
+      <div class="panel-section-title">Quarterly Trend</div>
+      <svg viewBox="0 0 260 80" width="100%" height="80" xmlns="http://www.w3.org/2000/svg">
+        <line x1="30" y1="5" x2="30" y2="65" stroke="#DDE3EC" stroke-width="1"/>
+        <line x1="30" y1="65" x2="255" y2="65" stroke="#DDE3EC" stroke-width="1"/>
+        <polyline points="30,55 88,52 146,45 204,58 255,50" fill="none" stroke="#1A3E6E" stroke-width="2.5"/>
+        <circle cx="30"  cy="55" r="4" fill="#1A3E6E"/><text x="25"  y="77" font-size="9" fill="#6B7C93" text-anchor="middle">Q3'25</text>
+        <circle cx="88"  cy="52" r="4" fill="#1A3E6E"/><text x="88"  y="77" font-size="9" fill="#6B7C93" text-anchor="middle">Q4'25</text>
+        <circle cx="146" cy="45" r="4" fill="#1A3E6E"/><text x="146" y="77" font-size="9" fill="#6B7C93" text-anchor="middle">Q1'26</text>
+        <circle cx="204" cy="58" r="4" fill="#E67E22"/><text x="204" y="77" font-size="9" fill="#6B7C93" text-anchor="middle">Q2'26</text>
+        <circle cx="255" cy="50" r="4" fill="#1A3E6E"/><text x="255" y="77" font-size="9" fill="#6B7C93" text-anchor="middle">Q3'26</text>
+        <text x="25" y="40" font-size="8" fill="#6B7C93">3.4%</text>
+        <text x="25" y="58" font-size="8" fill="#6B7C93">3.1%</text>
+      </svg>
+      <div class="panel-section-title">Commentary</div>
+      <p style="font-size:13px;color:#3D5166;line-height:1.6;">Q2 deficit exceeded target due to supplementary budget allocation for infrastructure projects. Ministry is implementing expenditure controls to return to trajectory by Q3 2026.</p>
+    </div>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+function filterByStatus() {
+  const status = document.getElementById('filter-status').value;
+  const pillar = document.getElementById('filter-pillar').value;
+  filterTable('sp-tbody', [
+    {colIndex: 0, value: pillar},
+    {colIndex: 6, value: status}
+  ]);
+}
+</script>
+</body>
+</html>

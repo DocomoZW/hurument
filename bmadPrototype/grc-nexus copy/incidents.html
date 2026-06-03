@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRC-Nexus | Incidents</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="app-wrapper">
+
+  <nav class="topnav">
+    <span class="topnav-logo">⚡ GRC-NEXUS</span>
+    <span class="topnav-brand">Ministry of Finance — Zimbabwe</span>
+    <div class="topnav-actions">
+      <div class="topnav-icon" title="Notifications">🔔<span style="position:absolute;background:var(--danger);color:#fff;border-radius:50%;font-size:9px;padding:1px 4px;margin-top:-8px;margin-left:6px;">5</span></div>
+      <div class="topnav-avatar">TM</div>
+      <span class="topnav-user">Tendai M.</span>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-section-label">Navigation</div>
+      <ul class="sidebar-nav">
+        <li><a href="index.html"><span class="nav-icon">🏠</span> Dashboard</a></li>
+        <li><a href="strategic-planning.html"><span class="nav-icon">📊</span> Strategic Planning</a></li>
+        <li><a href="risk-register.html"><span class="nav-icon">⚠️</span> Risk Management</a></li>
+        <li><a href="board-management.html"><span class="nav-icon">👥</span> Board Governance</a></li>
+        <li><a href="compliance.html"><span class="nav-icon">✅</span> Compliance</a></li>
+        <li><a href="incidents.html"><span class="nav-icon">🚨</span> Incidents</a></li>
+        <li><a href="internal-audit.html"><span class="nav-icon">🔍</span> Internal Audit</a></li>
+        <li><a href="vendor-risk.html"><span class="nav-icon">🏢</span> Vendor Risk</a></li>
+        <li><a href="reports.html"><span class="nav-icon">📈</span> Reports</a></li>
+      </ul>
+      <div class="sidebar-footer">GRC-Nexus v2.1<br>NDS2 Aligned Platform</div>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html" class="breadcrumb-link">Dashboard</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current">Incident Management</span>
+      </div>
+      <div class="page-header">
+        <div class="page-title">Incident Management</div>
+        <div class="page-subtitle">Case Log, Investigation &amp; Resolution | Ministry of Finance</div>
+      </div>
+
+      <!-- Stat Cards -->
+      <div class="stat-grid" style="grid-template-columns:repeat(4,1fr);">
+        <div class="stat-card"><div class="stat-icon">🚨</div><div class="stat-value">8</div><div class="stat-label">Active Cases</div></div>
+        <div class="stat-card"><div class="stat-icon">🔍</div><div class="stat-value">3</div><div class="stat-label">Under Investigation</div></div>
+        <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-value">12</div><div class="stat-label">Resolved YTD</div></div>
+        <div class="stat-card"><div class="stat-icon">⚡</div><div class="stat-value">2</div><div class="stat-label">Critical Priority</div><div class="stat-trend up">▲</div></div>
+      </div>
+
+      <div class="tabs-container">
+        <div class="tabs-nav">
+          <button class="tab-btn">Incident Log</button>
+          <button class="tab-btn">Report Incident</button>
+        </div>
+
+        <!-- Tab 1: Incident Log -->
+        <div class="tab-content">
+          <div class="filter-bar">
+            <label class="filter-label">Priority:</label>
+            <select class="filter-select" onchange="filterTable('inc-tbody', [{colIndex:4, value:this.value}])">
+              <option value="all">All</option>
+              <option value="Critical">Critical</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+            <label class="filter-label" style="margin-left:16px;">Status:</label>
+            <select class="filter-select" onchange="filterTable('inc-tbody', [{colIndex:6, value:this.value}])">
+              <option value="all">All</option>
+              <option value="Investigating">Investigating</option>
+              <option value="Open">Open</option>
+              <option value="Resolved">Resolved</option>
+            </select>
+          </div>
+          <div class="card" style="padding:0;">
+            <table id="inc-table" class="data-table">
+              <thead>
+                <tr>
+                  <th>Case ID</th>
+                  <th>Title</th>
+                  <th class="sortable">Reported <span class="sort-icon">↕</span></th>
+                  <th>Category</th>
+                  <th>Priority</th>
+                  <th>Reporter</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="inc-tbody">
+                <tr>
+                  <td>INC-2026-042</td>
+                  <td>🔒 Unauthorised System Access — Finance Portal</td>
+                  <td>14 May 2026</td><td>Cybersecurity</td>
+                  <td><span class="badge badge-critical">Critical</span></td>
+                  <td>T. Makoni</td>
+                  <td><span class="badge badge-investigating">Investigating</span></td>
+                  <td><button class="btn-link" onclick="openPanel('inc-panel')">Details</button></td>
+                </tr>
+                <tr>
+                  <td>INC-2026-041</td>
+                  <td>Budget Data Discrepancy — Q1 PFMA Report</td>
+                  <td>10 May 2026</td><td>Financial</td>
+                  <td><span class="badge badge-critical">Critical</span></td>
+                  <td>P. Ndoro</td>
+                  <td><span class="badge badge-investigating">Investigating</span></td>
+                  <td><button class="btn-link" onclick="openPanel('inc-panel')">Details</button></td>
+                </tr>
+                <tr>
+                  <td>INC-2026-040</td>
+                  <td>🔒 Whistleblower Report — Procurement Irregularity</td>
+                  <td>08 May 2026</td><td>Ethics</td>
+                  <td><span class="badge badge-high">High</span></td>
+                  <td>Confidential</td>
+                  <td><span class="badge badge-investigating">Investigating</span></td>
+                  <td><button class="btn-link" onclick="openPanel('inc-panel')">Details</button></td>
+                </tr>
+                <tr>
+                  <td>INC-2026-039</td>
+                  <td>Payroll Processing Delay — May 2026</td>
+                  <td>01 May 2026</td><td>Operational</td>
+                  <td><span class="badge badge-high">High</span></td>
+                  <td>F. Sithole</td>
+                  <td><span class="badge badge-open">Open</span></td>
+                  <td><button class="btn-link" onclick="openPanel('inc-panel')">Details</button></td>
+                </tr>
+                <tr>
+                  <td>INC-2026-038</td>
+                  <td>PPDPA Complaint — Citizen Data Request Delayed</td>
+                  <td>28 Apr 2026</td><td>Compliance</td>
+                  <td><span class="badge badge-medium">Medium</span></td>
+                  <td>N. Zimba</td>
+                  <td><span class="badge badge-open">Open</span></td>
+                  <td><button class="btn-link" onclick="openPanel('inc-panel')">Details</button></td>
+                </tr>
+                <tr>
+                  <td>INC-2026-037</td>
+                  <td>IT System Downtime — IFMIS Portal (6 hrs)</td>
+                  <td>22 Apr 2026</td><td>ICT</td>
+                  <td><span class="badge badge-medium">Medium</span></td>
+                  <td>T. Makoni</td>
+                  <td><span class="badge badge-closed">Resolved</span></td>
+                  <td><button class="btn-link" onclick="openPanel('inc-panel')">Details</button></td>
+                </tr>
+                <tr>
+                  <td>INC-2026-036</td>
+                  <td>Physical Security Breach — Level 3 Server Room</td>
+                  <td>15 Apr 2026</td><td>Physical Security</td>
+                  <td><span class="badge badge-high">High</span></td>
+                  <td>T. Moyo</td>
+                  <td><span class="badge badge-closed">Resolved</span></td>
+                  <td><button class="btn-link" onclick="openPanel('inc-panel')">Details</button></td>
+                </tr>
+                <tr>
+                  <td>INC-2026-035</td>
+                  <td>Supplier Invoice Duplication — ZWG 120,000</td>
+                  <td>10 Apr 2026</td><td>Financial</td>
+                  <td><span class="badge badge-low">Low</span></td>
+                  <td>S. Choto</td>
+                  <td><span class="badge badge-closed">Resolved</span></td>
+                  <td><button class="btn-link" onclick="openPanel('inc-panel')">Details</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tab 2: Report Incident -->
+        <div class="tab-content">
+          <div class="card" style="max-width:640px;">
+            <div class="card-title"><span class="card-title-icon">🚨</span> Report a New Incident</div>
+            <form id="inc-report-form" class="grc-form" onsubmit="handleIncidentSubmit(event)">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Incident Title <span style="color:var(--danger)">*</span></label>
+                  <input type="text" class="form-input" placeholder="Brief description of the incident" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Category <span style="color:var(--danger)">*</span></label>
+                  <select class="form-select" required>
+                    <option value="">Select category…</option>
+                    <option>Cybersecurity</option>
+                    <option>Financial</option>
+                    <option>Operational</option>
+                    <option>Compliance</option>
+                    <option>ICT</option>
+                    <option>Physical Security</option>
+                    <option>Ethics</option>
+                    <option>HR</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Priority <span style="color:var(--danger)">*</span></label>
+                  <select class="form-select" required>
+                    <option value="">Select priority…</option>
+                    <option>Critical</option>
+                    <option>High</option>
+                    <option>Medium</option>
+                    <option>Low</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Date / Time of Incident</label>
+                  <input type="datetime-local" class="form-input">
+                </div>
+                <div class="form-group" style="grid-column:1/-1;">
+                  <label class="form-label">Incident Description <span style="color:var(--danger)">*</span></label>
+                  <textarea class="form-textarea" rows="4" placeholder="Provide full details: what happened, who was involved, systems/assets affected, immediate impact…" required></textarea>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Reporter Name</label>
+                  <input type="text" class="form-input" value="Tendai M." placeholder="Your name">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Notify Owner</label>
+                  <select class="form-select">
+                    <option>T. Makoni (ICT)</option>
+                    <option>P. Ndoro (Finance)</option>
+                    <option>T. Moyo (Risk)</option>
+                    <option>N. Zimba (Compliance)</option>
+                  </select>
+                </div>
+                <div class="form-group" style="grid-column:1/-1;">
+                  <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:#3D5166;">
+                    <input type="checkbox"> Mark as confidential / whistleblower report
+                  </label>
+                </div>
+              </div>
+              <div style="display:flex;gap:12px;margin-top:8px;">
+                <button type="submit" class="btn btn-primary">Submit Incident Report</button>
+                <button type="reset" class="btn btn-secondary">Clear Form</button>
+              </div>
+              <div class="form-success-msg" id="inc-success" style="display:none;">
+                ✅ Incident report submitted successfully. Case ID <strong>INC-2026-043</strong> assigned. Owner notified.
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Incident Detail Panel -->
+<div class="panel-overlay" id="inc-panel">
+  <div class="side-panel">
+    <div class="panel-header">
+      <div class="panel-title">Incident Detail — INC-2026-042</div>
+      <button class="panel-close" onclick="closePanel('inc-panel')">✕</button>
+    </div>
+    <div class="panel-body">
+      <div class="panel-meta-grid">
+        <div><div class="panel-meta-label">Case ID</div><div class="panel-meta-val">INC-2026-042</div></div>
+        <div><div class="panel-meta-label">Category</div><div class="panel-meta-val">Cybersecurity</div></div>
+        <div><div class="panel-meta-label">Priority</div><div class="panel-meta-val"><span class="badge badge-critical">Critical</span></div></div>
+        <div><div class="panel-meta-label">Status</div><div class="panel-meta-val"><span class="badge badge-investigating">Investigating</span></div></div>
+        <div><div class="panel-meta-label">Reported</div><div class="panel-meta-val">14 May 2026 09:41</div></div>
+        <div><div class="panel-meta-label">Investigator</div><div class="panel-meta-val">T. Makoni</div></div>
+      </div>
+      <div class="panel-section-title">Investigation Timeline</div>
+      <div class="timeline">
+        <div class="timeline-item done">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <strong>Reported</strong> — 14 May 2026 09:41<br>
+            <span style="font-size:12px;color:#5A7189;">Unauthorised login attempt detected on Finance Portal. Alert triggered by SIEM system.</span>
+          </div>
+        </div>
+        <div class="timeline-item done">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <strong>Investigating</strong> — 14 May 2026 11:00<br>
+            <span style="font-size:12px;color:#5A7189;">Access logs pulled and forensic analysis initiated. POTRAZ ICT Security team engaged.</span>
+          </div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <strong>Containment</strong> — Pending<br>
+            <span style="font-size:12px;color:#5A7189;">Awaiting forensic report. Affected user accounts suspended pending investigation.</span>
+          </div>
+        </div>
+        <div class="timeline-item pending">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <strong>Resolved</strong> — Target: 21 May 2026<br>
+            <span style="font-size:12px;color:#5A7189;">Not yet resolved.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+function handleIncidentSubmit(e) {
+  e.preventDefault();
+  const msg = document.getElementById('inc-success');
+  if (msg) { msg.style.display = 'block'; }
+  console.log('[GRC-Nexus] Incident report submitted');
+}
+</script>
+</body>
+</html>

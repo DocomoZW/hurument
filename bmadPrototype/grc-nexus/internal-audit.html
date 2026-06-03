@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRC-Nexus | Internal Audit</title>
+  <script>if(localStorage.getItem('grc-theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');}</script>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="app-wrapper">
+
+  <nav class="topnav">
+    <button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Toggle Sidebar">☰</button>
+    <span class="topnav-logo">⚡ GRC-NEXUS</span>
+    <span class="topnav-brand">Ministry of Finance — Zimbabwe</span>
+    <div class="topnav-actions">
+      <button class="theme-toggle-btn" id="theme-btn" onclick="toggleDarkMode()" title="Toggle Dark Mode">🌙</button>
+      <div class="topnav-icon" title="Notifications">🔔<span style="position:absolute;background:var(--danger);color:#fff;border-radius:50%;font-size:9px;padding:1px 4px;margin-top:-8px;margin-left:6px;">5</span></div>
+      <div class="topnav-avatar" title="Tendai M.">TM</div>
+      <span class="topnav-user">Tendai M.</span>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-section-label">Navigation</div>
+      <ul class="sidebar-nav">
+        <li><a href="index.html" title="Dashboard"><span class="nav-icon">🏠</span> Dashboard</a></li>
+        <li><a href="strategic-planning.html" title="Strategic Planning"><span class="nav-icon">📊</span> Strategic Planning</a></li>
+        <li><a href="risk-register.html" title="Risk Management"><span class="nav-icon">⚠️</span> Risk Management</a></li>
+        <li><a href="board-management.html" title="Board Governance"><span class="nav-icon">👥</span> Board Governance</a></li>
+        <li><a href="compliance.html" title="Compliance"><span class="nav-icon">✅</span> Compliance</a></li>
+        <li><a href="incidents.html" title="Incidents"><span class="nav-icon">🚨</span> Incidents</a></li>
+        <li><a href="internal-audit.html" title="Internal Audit"><span class="nav-icon">🔍</span> Internal Audit</a></li>
+        <li><a href="vendor-risk.html" title="Vendor Risk"><span class="nav-icon">🏢</span> Vendor Risk</a></li>
+        <li><a href="reports.html" title="Reports"><span class="nav-icon">📈</span> Reports</a></li>
+      </ul>
+      <div class="sidebar-footer">GRC-Nexus v2.1<br>NDS2 Aligned Platform</div>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html" class="breadcrumb-link">Dashboard</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current">Internal Audit</span>
+      </div>
+      <div class="page-header">
+        <div class="page-title">Internal Audit</div>
+        <div class="page-subtitle">Audit Universe, Annual Plan &amp; Findings | Ministry of Finance</div>
+      </div>
+
+      <!-- Summary counts -->
+      <div class="stat-grid" style="grid-template-columns:repeat(4,1fr);">
+        <div class="stat-card"><div class="stat-icon">🔴</div><div class="stat-value">12</div><div class="stat-label">Critical Findings</div></div>
+        <div class="stat-card"><div class="stat-icon">🟠</div><div class="stat-value">7</div><div class="stat-label">High Findings</div></div>
+        <div class="stat-card"><div class="stat-icon">🟡</div><div class="stat-value">3</div><div class="stat-label">Medium Findings</div></div>
+        <div class="stat-card"><div class="stat-icon">🟢</div><div class="stat-value">2</div><div class="stat-label">Low Findings</div></div>
+      </div>
+
+      <div class="tabs-container">
+        <div class="tabs-nav">
+          <button class="tab-btn">Audit Universe</button>
+          <button class="tab-btn">Annual Plan</button>
+          <button class="tab-btn">Findings</button>
+        </div>
+
+        <!-- Tab 1: Audit Universe -->
+        <div class="tab-content">
+          <div class="card" style="padding:0;">
+            <table id="universe-table" class="data-table">
+              <thead>
+                <tr>
+                  <th>Audit Area</th>
+                  <th>Category</th>
+                  <th>Risk Rating</th>
+                  <th>Last Audit</th>
+                  <th class="sortable">Next Due <span class="sort-icon">↕</span></th>
+                  <th>Frequency</th>
+                  <th>Lead Auditor</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Financial Management &amp; Reporting</td><td>Finance</td>
+                  <td><span class="badge badge-critical">Critical</span></td>
+                  <td>Oct 2025</td><td>Apr 2026</td><td>Semi-Annual</td><td>B. Chirwa</td>
+                  <td><span class="badge badge-investigating">In Progress</span></td>
+                </tr>
+                <tr>
+                  <td>Procurement &amp; Contracting</td><td>Procurement</td>
+                  <td><span class="badge badge-high">High</span></td>
+                  <td>Jun 2025</td><td>Jun 2026</td><td>Annual</td><td>L. Moyo</td>
+                  <td><span class="badge badge-pending">Planned</span></td>
+                </tr>
+                <tr>
+                  <td>ICT General Controls</td><td>ICT</td>
+                  <td><span class="badge badge-critical">Critical</span></td>
+                  <td>Mar 2026</td><td>Sep 2026</td><td>Semi-Annual</td><td>B. Chirwa</td>
+                  <td><span class="badge badge-pending">Planned</span></td>
+                </tr>
+                <tr>
+                  <td>Payroll &amp; HR Administration</td><td>HR / Finance</td>
+                  <td><span class="badge badge-high">High</span></td>
+                  <td>Jan 2026</td><td>Jul 2026</td><td>Semi-Annual</td><td>R. Ncube</td>
+                  <td><span class="badge badge-pending">Planned</span></td>
+                </tr>
+                <tr>
+                  <td>Revenue Collection Controls</td><td>Finance</td>
+                  <td><span class="badge badge-high">High</span></td>
+                  <td>Aug 2025</td><td>Aug 2026</td><td>Annual</td><td>L. Moyo</td>
+                  <td><span class="badge badge-pending">Planned</span></td>
+                </tr>
+                <tr>
+                  <td>Asset Management &amp; Disposal</td><td>Operations</td>
+                  <td><span class="badge badge-medium">Medium</span></td>
+                  <td>Dec 2025</td><td>Dec 2026</td><td>Annual</td><td>R. Ncube</td>
+                  <td><span class="badge badge-pending">Planned</span></td>
+                </tr>
+                <tr>
+                  <td>Data Privacy &amp; PPDPA Compliance</td><td>Compliance</td>
+                  <td><span class="badge badge-medium">Medium</span></td>
+                  <td>May 2025</td><td>May 2026</td><td>Annual</td><td>B. Chirwa</td>
+                  <td><span class="badge badge-closed">Complete</span></td>
+                </tr>
+                <tr>
+                  <td>Grant Management</td><td>Finance</td>
+                  <td><span class="badge badge-low">Low</span></td>
+                  <td>Nov 2025</td><td>Nov 2026</td><td>Annual</td><td>L. Moyo</td>
+                  <td><span class="badge badge-pending">Planned</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tab 2: Annual Plan Gantt -->
+        <div class="tab-content">
+          <div class="card">
+            <div class="card-title"><span class="card-title-icon">📅</span> Annual Audit Plan 2026 — Gantt View</div>
+            <div style="overflow-x:auto;">
+              <svg viewBox="0 0 760 310" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-width:600px;font-family:Inter,sans-serif;font-size:11px;">
+                <!-- Month headers -->
+                <g fill="#5A7189">
+                  <text x="185" y="18">Jan</text><text x="245" y="18">Feb</text><text x="305" y="18">Mar</text>
+                  <text x="365" y="18">Apr</text><text x="425" y="18">May</text><text x="485" y="18">Jun</text>
+                  <text x="545" y="18">Jul</text><text x="605" y="18">Aug</text><text x="665" y="18">Sep</text>
+                  <text x="725" y="18">Oct</text>
+                </g>
+                <!-- Vertical grid lines -->
+                <g stroke="#E5E9F0" stroke-width="1">
+                  <line x1="180" y1="24" x2="180" y2="305"/>
+                  <line x1="240" y1="24" x2="240" y2="305"/>
+                  <line x1="300" y1="24" x2="300" y2="305"/>
+                  <line x1="360" y1="24" x2="360" y2="305"/>
+                  <line x1="420" y1="24" x2="420" y2="305"/>
+                  <line x1="480" y1="24" x2="480" y2="305"/>
+                  <line x1="540" y1="24" x2="540" y2="305"/>
+                  <line x1="600" y1="24" x2="600" y2="305"/>
+                  <line x1="660" y1="24" x2="660" y2="305"/>
+                  <line x1="720" y1="24" x2="720" y2="305"/>
+                </g>
+                <!-- Row labels -->
+                <g fill="#1C2B3A" font-weight="500">
+                  <text x="4" y="54">Financial Mgmt</text>
+                  <text x="4" y="94">Procurement</text>
+                  <text x="4" y="134">ICT Controls</text>
+                  <text x="4" y="174">Payroll &amp; HR</text>
+                  <text x="4" y="214">Revenue Ctrls</text>
+                  <text x="4" y="254">Asset Mgmt</text>
+                </g>
+                <!-- Gantt bars: each month = 60px wide, start at x=180, Jan=180 -->
+                <!-- Financial Mgmt: Apr–Jun (complete) -->
+                <rect x="360" y="38" width="120" height="22" rx="4" fill="#1A3E6E" opacity="0.85"/>
+                <text x="370" y="53" fill="#fff" font-size="10">In Progress — Q2</text>
+                <!-- Procurement: Jun–Jul (planned) -->
+                <rect x="480" y="78" width="60" height="22" rx="4" fill="#C9A84C" opacity="0.85"/>
+                <text x="490" y="93" fill="#fff" font-size="10">Q3 Planned</text>
+                <!-- ICT Controls: Sep (planned) -->
+                <rect x="660" y="118" width="60" height="22" rx="4" fill="#C9A84C" opacity="0.85"/>
+                <text x="670" y="133" fill="#fff" font-size="10">Q4 Planned</text>
+                <!-- Payroll: Jan–Feb (complete) + Jul (planned) -->
+                <rect x="180" y="158" width="120" height="22" rx="4" fill="#27AE60" opacity="0.85"/>
+                <text x="190" y="173" fill="#fff" font-size="10">Complete Q1</text>
+                <rect x="540" y="158" width="60" height="22" rx="4" fill="#C9A84C" opacity="0.85"/>
+                <text x="550" y="173" fill="#fff" font-size="10">Q3</text>
+                <!-- Revenue: Aug (planned) -->
+                <rect x="600" y="198" width="60" height="22" rx="4" fill="#C9A84C" opacity="0.85"/>
+                <text x="610" y="213" fill="#fff" font-size="10">Q4 Planned</text>
+                <!-- Asset Mgmt: Dec — out of range shown, use Oct as indicator -->
+                <rect x="720" y="238" width="30" height="22" rx="4" fill="#C9A84C" opacity="0.85"/>
+                <text x="726" y="253" fill="#fff" font-size="10">Q4</text>
+                <!-- Legend -->
+                <rect x="180" y="282" width="14" height="10" rx="2" fill="#1A3E6E" opacity="0.85"/>
+                <text x="198" y="291" fill="#5A7189">In Progress</text>
+                <rect x="280" y="282" width="14" height="10" rx="2" fill="#27AE60" opacity="0.85"/>
+                <text x="298" y="291" fill="#5A7189">Complete</text>
+                <rect x="370" y="282" width="14" height="10" rx="2" fill="#C9A84C" opacity="0.85"/>
+                <text x="388" y="291" fill="#5A7189">Planned</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Findings -->
+        <div class="tab-content">
+          <div class="filter-bar">
+            <label class="filter-label">Severity:</label>
+            <select class="filter-select" onchange="filterTable('findings-tbody', [{colIndex:3, value:this.value}])">
+              <option value="all">All</option>
+              <option value="Critical">Critical</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+            <label class="filter-label" style="margin-left:16px;">Status:</label>
+            <select class="filter-select" onchange="filterTable('findings-tbody', [{colIndex:6, value:this.value}])">
+              <option value="all">All</option>
+              <option value="Open">Open</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </div>
+          <div class="card" style="padding:0;">
+            <table id="findings-table" class="data-table">
+              <thead>
+                <tr>
+                  <th>Finding Ref</th>
+                  <th>Audit Area</th>
+                  <th>Finding Description</th>
+                  <th>Severity</th>
+                  <th>Owner</th>
+                  <th class="sortable">Target Date <span class="sort-icon">↕</span></th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="findings-tbody">
+                <tr>
+                  <td>IAF-034</td><td>ICT Controls</td>
+                  <td>Privileged account access not reviewed quarterly as per policy</td>
+                  <td><span class="badge badge-critical">Critical</span></td>
+                  <td>T. Makoni</td><td>30 Apr 2026</td>
+                  <td><span class="badge badge-closed">Closed</span></td>
+                </tr>
+                <tr>
+                  <td>IAF-035</td><td>Financial Mgmt</td>
+                  <td>Bank reconciliations delayed beyond 5-day SLA for 3 accounts</td>
+                  <td><span class="badge badge-critical">Critical</span></td>
+                  <td>S. Choto</td><td>31 May 2026</td>
+                  <td><span class="badge badge-investigating">In Progress</span></td>
+                </tr>
+                <tr>
+                  <td>IAF-036</td><td>Financial Mgmt</td>
+                  <td>Budget virements executed without dual approval in 4 instances</td>
+                  <td><span class="badge badge-critical">Critical</span></td>
+                  <td>P. Ndoro</td><td>15 Jun 2026</td>
+                  <td><span class="badge badge-open">Open</span></td>
+                </tr>
+                <tr>
+                  <td>IAF-037</td><td>Payroll &amp; HR</td>
+                  <td>Ghost workers detected — 2 employees on payroll not on staff complement</td>
+                  <td><span class="badge badge-critical">Critical</span></td>
+                  <td>F. Sithole</td><td>30 Jun 2026</td>
+                  <td><span class="badge badge-investigating">In Progress</span></td>
+                </tr>
+                <tr>
+                  <td>IAF-038</td><td>Procurement</td>
+                  <td>Sole-source procurement not adequately justified for 6 contracts</td>
+                  <td><span class="badge badge-high">High</span></td>
+                  <td>C. Mwale</td><td>30 Jun 2026</td>
+                  <td><span class="badge badge-open">Open</span></td>
+                </tr>
+                <tr>
+                  <td>IAF-039</td><td>ICT Controls</td>
+                  <td>Disaster Recovery Plan not tested in FY2025</td>
+                  <td><span class="badge badge-high">High</span></td>
+                  <td>T. Makoni</td><td>31 Jul 2026</td>
+                  <td><span class="badge badge-open">Open</span></td>
+                </tr>
+                <tr>
+                  <td>IAF-040</td><td>Payroll &amp; HR</td>
+                  <td>Leave balances not reconciled for Q4 2025</td>
+                  <td><span class="badge badge-medium">Medium</span></td>
+                  <td>F. Sithole</td><td>15 May 2026</td>
+                  <td><span class="badge badge-closed">Closed</span></td>
+                </tr>
+                <tr>
+                  <td>IAF-041</td><td>Asset Mgmt</td>
+                  <td>Asset register not updated following 2025 disposal exercise</td>
+                  <td><span class="badge badge-medium">Medium</span></td>
+                  <td>T. Moyo</td><td>30 Jun 2026</td>
+                  <td><span class="badge badge-investigating">In Progress</span></td>
+                </tr>
+                <tr>
+                  <td>IAF-042</td><td>Revenue Controls</td>
+                  <td>Receipt cancellations not reviewed by independent supervisor</td>
+                  <td><span class="badge badge-high">High</span></td>
+                  <td>P. Ndoro</td><td>31 Jul 2026</td>
+                  <td><span class="badge badge-open">Open</span></td>
+                </tr>
+                <tr>
+                  <td>IAF-043</td><td>Data Privacy</td>
+                  <td>Consent forms not updated to reflect PPDPA requirements</td>
+                  <td><span class="badge badge-low">Low</span></td>
+                  <td>N. Zimba</td><td>31 Aug 2026</td>
+                  <td><span class="badge badge-open">Open</span></td>
+                </tr>
+                <tr>
+                  <td>IAF-044</td><td>Financial Mgmt</td>
+                  <td>Petty cash imprest not reimbursed within 30-day policy deadline</td>
+                  <td><span class="badge badge-low">Low</span></td>
+                  <td>S. Choto</td><td>30 Apr 2026</td>
+                  <td><span class="badge badge-closed">Closed</span></td>
+                </tr>
+                <tr>
+                  <td>IAF-045</td><td>Procurement</td>
+                  <td>Bid evaluation committee minutes incomplete for 3 awards</td>
+                  <td><span class="badge badge-high">High</span></td>
+                  <td>C. Mwale</td><td>31 May 2026</td>
+                  <td><span class="badge badge-open">Open</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

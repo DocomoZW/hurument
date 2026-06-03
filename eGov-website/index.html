@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRC-Nexus — Zimbabwe's National Governance Operating System</title>
+  <meta name="description" content="One integrated platform connecting national strategy, institutional risk, board oversight, compliance, and delivery performance — from NDS2 priorities to operational accountability.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ================================================================
+       DESIGN TOKENS
+    ================================================================ */
+    :root {
+      --c-ink:        #050D1B;
+      --c-ink-mid:    #0B1625;
+      --c-ink-light:  #111F35;
+      --c-ink-lift:   #192C46;
+      --c-ink-rim:    #243554;
+      --c-ink-stroke: #2E4268;
+
+      --c-gold:       #C8A44A;
+      --c-gold-hi:    #DDB96A;
+      --c-gold-pale:  #F3E2BC;
+      --c-gold-glow:  rgba(200,164,74,.12);
+      --c-gold-ring:  rgba(200,164,74,.25);
+
+      --c-paper:      #F3F7FD;
+      --c-white:      #FFFFFF;
+      --c-paper-line: #D7E2EF;
+      --c-ink-on-paper: #0B1625;
+      --c-ink-on-paper-2: #3A5270;
+
+      --c-text:       #EBF0FF;
+      --c-text-2:     #7C97BF;
+      --c-text-3:     #48617E;
+
+      --c-ok:         #27AE60;
+      --c-warn:       #E67E22;
+      --c-err:        #E74C3C;
+
+      --nav-h:    68px;
+      --r-sm:     6px;
+      --r-md:     10px;
+      --r-lg:     16px;
+      --r-xl:     22px;
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --t-fast: 180ms ease;
+      --t-med:  320ms ease;
+      --t-slow: 600ms var(--ease-out-expo);
+
+      --shadow-md: 0 8px 32px rgba(0,0,0,.28);
+      --shadow-lg: 0 24px 64px rgba(0,0,0,.38);
+      --shadow-gold: 0 8px 28px rgba(200,164,74,.22);
+    }
+
+    /* ================================================================
+       RESET
+    ================================================================ */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { font-size:16px; scroll-behavior:smooth; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--c-ink);
+      color: var(--c-text-2);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar            { width: 3px; }
+    ::-webkit-scrollbar-track      { background: var(--c-ink); }
+    ::-webkit-scrollbar-thumb      { background: var(--c-gold); border-radius: 2px; }
+
+    a { text-decoration: none; }
+    img { display:block; max-width:100%; }
+
+    /* ================================================================
+       PROGRESS BAR
+    ================================================================ */
+    #progress {
+      position: fixed; top:0; left:0; width:0; height:2px; z-index:500;
+      background: linear-gradient(to right, var(--c-gold), var(--c-gold-hi));
+      transition: width .1s linear;
+      pointer-events: none;
+    }
+
+    /* ================================================================
+       NAV
+    ================================================================ */
+    #nav {
+      position: fixed; inset: 0 0 auto 0;
+      height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 56px;
+      z-index: 200;
+      transition: background .3s ease, border-color .3s ease;
+    }
+    #nav.scrolled {
+      background: rgba(5,13,27,.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--c-ink-stroke);
+    }
+
+    .nav-brand {
+      display: flex; align-items: center; gap: 11px;
+      color: var(--c-text); font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 700; letter-spacing: .02em;
+    }
+    .nav-brand span { color: var(--c-gold); }
+
+    .nav-logo-wrap {
+      width:34px; height:34px;
+      background: var(--c-gold-glow);
+      border: 1px solid var(--c-gold-ring);
+      border-radius: 8px;
+      display:flex; align-items:center; justify-content:center;
+    }
+
+    .nav-links {
+      display:flex; align-items:center; gap:2px; list-style:none;
+    }
+    .nav-links a {
+      font-size: .78rem; font-weight:500;
+      color: var(--c-text-2);
+      padding: 6px 13px; border-radius: var(--r-sm);
+      letter-spacing: .07em; text-transform:uppercase;
+      transition: color var(--t-fast), background var(--t-fast);
+    }
+    .nav-links a:hover { color:var(--c-text); background:rgba(255,255,255,.05); }
+    .nav-links a.active { color: var(--c-gold); }
+    .nav-links .nav-cta {
+      background: var(--c-gold) !important;
+      color: var(--c-ink-mid) !important;
+      font-weight: 600 !important;
+      padding: 7px 18px !important;
+      margin-left: 8px;
+    }
+    .nav-links .nav-cta:hover { background: var(--c-gold-hi) !important; }
+
+    /* ================================================================
+       SLIDE COUNTER
+    ================================================================ */
+    #counter {
+      position:fixed; bottom:28px; right:48px; z-index:200;
+      font-family:'DM Mono',monospace; font-size:.72rem;
+      color: var(--c-text-3); letter-spacing:.12em;
+      pointer-events:none;
+    }
+    #counter .cur { color: var(--c-gold); }
+
+    /* keyboard hint */
+    #kbd-hint {
+      position:fixed; bottom:28px; left:50%; transform:translateX(-50%);
+      background:rgba(5,13,27,.85);
+      border:1px solid var(--c-ink-stroke);
+      border-radius: 8px; padding: 8px 18px;
+      font-family:'DM Mono',monospace; font-size:.68rem;
+      color:var(--c-text-3); letter-spacing:.1em;
+      backdrop-filter:blur(12px); z-index:200;
+      transition:opacity .4s ease;
+    }
+    #kbd-hint.hidden { opacity:0; pointer-events:none; }
+
+    /* ================================================================
+       SECTION LAYOUT BASE
+    ================================================================ */
+    section {
+      min-height:100vh;
+      display:flex; align-items:center;
+      padding: calc(var(--nav-h) + 64px) 80px 80px;
+      position:relative; overflow:hidden;
+    }
+    .s-inner { max-width:1180px; margin:0 auto; width:100%; }
+
+    .s-eyebrow {
+      display:flex; align-items:center; gap:12px;
+      font-family:'DM Mono',monospace; font-size:.68rem;
+      font-weight:500; letter-spacing:.22em; text-transform:uppercase;
+      color:var(--c-gold); margin-bottom:18px;
+    }
+    .s-eyebrow::before {
+      content:''; display:block;
+      width:28px; height:1px; background:var(--c-gold);
+    }
+    .s-eyebrow.center { justify-content:center; }
+    .s-eyebrow.center::before { display:none; }
+
+    .s-title {
+      font-family:'Playfair Display',serif;
+      font-size: clamp(2.4rem,5vw,4rem);
+      font-weight:700; line-height:1.08;
+      color:var(--c-text); margin-bottom:22px;
+      letter-spacing:-.01em;
+    }
+    .s-title em { font-style:italic; color:var(--c-gold); }
+    .s-title.on-paper { color: var(--c-ink-on-paper); }
+    .s-title.on-paper em { color: var(--c-gold); }
+
+    .s-body {
+      font-size:1.05rem; line-height:1.72;
+      color:var(--c-text-2); max-width:580px;
+    }
+    .s-body.on-paper { color: var(--c-ink-on-paper-2); }
+
+    .rule {
+      width:56px; height:2px; border-radius:1px;
+      background: linear-gradient(to right, var(--c-gold), transparent);
+      margin:24px 0;
+    }
+
+    /* ================================================================
+       BUTTONS
+    ================================================================ */
+    .btn {
+      display:inline-flex; align-items:center; gap:8px;
+      font-family:'DM Sans',sans-serif; font-size:.88rem; font-weight:600;
+      padding:13px 26px; border-radius:var(--r-md);
+      letter-spacing:.02em; cursor:pointer; border:none;
+      transition:all var(--t-med);
+    }
+    .btn-gold {
+      background:var(--c-gold); color:var(--c-ink-mid);
+    }
+    .btn-gold:hover { background:var(--c-gold-hi); transform:translateY(-2px); box-shadow:var(--shadow-gold); }
+    .btn-outline {
+      background:transparent; color:var(--c-text);
+      border:1px solid var(--c-ink-stroke);
+    }
+    .btn-outline:hover { background:rgba(255,255,255,.04); border-color:var(--c-text-3); transform:translateY(-2px); }
+    .btn-ghost {
+      background:transparent; color:var(--c-gold);
+      border:1px solid var(--c-gold-ring);
+    }
+    .btn-ghost:hover { background:var(--c-gold-glow); }
+
+    /* ================================================================
+       REVEAL ANIMATIONS
+    ================================================================ */
+    .rv {
+      opacity:0; transform:translateY(22px);
+      transition: opacity .65s ease, transform .65s var(--ease-out-expo);
+    }
+    .rv.in { opacity:1; transform:translateY(0); }
+    .d1{transition-delay:.08s} .d2{transition-delay:.16s} .d3{transition-delay:.24s}
+    .d4{transition-delay:.32s} .d5{transition-delay:.40s} .d6{transition-delay:.48s}
+
+    /* ================================================================
+       §1  HERO
+    ================================================================ */
+    #hero {
+      background:var(--c-ink);
+      justify-content:center; text-align:center;
+      padding-top:0;
+    }
+
+    .hero-canvas {
+      position:absolute; inset:0; overflow:hidden; z-index:0;
+    }
+    .hero-grid {
+      position:absolute; inset:0;
+      background-image:
+        linear-gradient(rgba(200,164,74,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(200,164,74,.035) 1px,transparent 1px);
+      background-size:72px 72px;
+    }
+    .hero-radial {
+      position:absolute; inset:0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(200,164,74,.07) 0%, transparent 70%);
+      animation: pulse-radial 7s ease-in-out infinite;
+    }
+    @keyframes pulse-radial {
+      0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}
+    }
+
+    .hero-body {
+      position:relative; z-index:1;
+      max-width:860px; padding:0 32px;
+    }
+
+    .hero-pill {
+      display:inline-flex; align-items:center; gap:9px;
+      background:rgba(200,164,74,.08);
+      border:1px solid rgba(200,164,74,.22);
+      border-radius:100px; padding:6px 16px;
+      margin-bottom:36px;
+      font-family:'DM Mono',monospace; font-size:.7rem;
+      letter-spacing:.12em; text-transform:uppercase;
+      color:var(--c-gold-hi);
+      animation: hero-pill-in .8s var(--ease-out-expo) .2s both;
+    }
+    @keyframes hero-pill-in { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+    .pill-dot {
+      width:6px; height:6px; background:var(--c-gold); border-radius:50%;
+      animation:blink 2s ease-in-out infinite;
+    }
+    @keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.75)}}
+
+    .hero-h1 {
+      font-family:'Playfair Display',serif;
+      font-size:clamp(4rem,10vw,8rem);
+      font-weight:900; line-height:.92;
+      color:var(--c-white); letter-spacing:-.025em;
+      animation:hero-h1-in 1s var(--ease-out-expo) .35s both;
+    }
+    @keyframes hero-h1-in { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+    .hero-sub {
+      font-family:'Playfair Display',serif;
+      font-size:clamp(1.4rem,3vw,2.2rem);
+      font-weight:400; font-style:italic;
+      color:var(--c-gold); margin:10px 0 28px;
+      animation:hero-sub-in .9s var(--ease-out-expo) .5s both;
+    }
+    @keyframes hero-sub-in { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+    .hero-lede {
+      font-size:clamp(.95rem,1.8vw,1.15rem);
+      color:var(--c-text-2); max-width:540px;
+      margin:0 auto 48px; line-height:1.72;
+      animation:hero-lede-in .9s var(--ease-out-expo) .65s both;
+    }
+    @keyframes hero-lede-in { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
+    .hero-actions {
+      display:flex; justify-content:center; gap:14px; flex-wrap:wrap;
+      margin-bottom:72px;
+      animation:fade-up .8s var(--ease-out-expo) .8s both;
+    }
+    @keyframes fade-up { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+    .hero-stats {
+      display:inline-flex;
+      border:1px solid var(--c-ink-stroke);
+      border-radius:var(--r-lg); overflow:hidden;
+      background:rgba(255,255,255,.02);
+      animation:fade-up .8s var(--ease-out-expo) .95s both;
+    }
+    .h-stat {
+      padding:18px 28px; border-right:1px solid var(--c-ink-stroke);
+      text-align:center;
+    }
+    .h-stat:last-child{border-right:none}
+    .h-stat-v {
+      font-family:'Playfair Display',serif;
+      font-size:1.8rem; font-weight:700; color:var(--c-gold);
+      line-height:1; margin-bottom:4px;
+    }
+    .h-stat-l {
+      font-size:.7rem; font-weight:500;
+      color:var(--c-text-3); letter-spacing:.07em; text-transform:uppercase;
+    }
+
+    .hero-scroll {
+      position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+      display:flex; flex-direction:column; align-items:center; gap:5px;
+      color:var(--c-text-3); font-family:'DM Mono',monospace;
+      font-size:.65rem; letter-spacing:.14em; text-transform:uppercase;
+      animation:scroll-bob 2.8s ease-in-out infinite;
+    }
+    @keyframes scroll-bob{0%,100%{opacity:.35;transform:translateX(-50%) translateY(0)}50%{opacity:.7;transform:translateX(-50%) translateY(5px)}}
+
+    /* ================================================================
+       §2  CHALLENGE
+    ================================================================ */
+    #challenge { background:var(--c-ink-mid); }
+
+    .challenge-grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center;
+    }
+
+    .prob-cards { display:flex; flex-direction:column; gap:14px; }
+
+    .prob-card {
+      display:grid; grid-template-columns:46px 1fr; gap:14px; align-items:start;
+      padding:22px; border-radius:var(--r-lg);
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--c-ink-stroke);
+      transition:all var(--t-med);
+    }
+    .prob-card:hover {
+      background:rgba(255,255,255,.055);
+      border-color:rgba(200,164,74,.28);
+      transform:translateX(5px);
+    }
+    .prob-icon {
+      width:46px; height:46px; border-radius:var(--r-md);
+      background:rgba(231,76,60,.09);
+      border:1px solid rgba(231,76,60,.18);
+      display:flex; align-items:center; justify-content:center;
+      color:#E74C3C;
+    }
+    .prob-card h3 { font-size:.92rem; font-weight:600; color:var(--c-text); margin-bottom:5px; }
+    .prob-card p  { font-size:.82rem; color:var(--c-text-2); line-height:1.55; }
+    .prob-stat {
+      margin-top:10px;
+      background:rgba(231,76,60,.06); border:1px solid rgba(231,76,60,.14);
+      border-radius:var(--r-sm); padding:10px 14px;
+      display:flex; align-items:center; gap:10px;
+    }
+    .prob-stat .n { font-family:'Playfair Display',serif; font-size:1.35rem; font-weight:700; color:#E74C3C; }
+    .prob-stat .l { font-size:.75rem; color:var(--c-text-2); line-height:1.3; }
+
+    /* ================================================================
+       §3  SOLUTION — WATERFALL
+    ================================================================ */
+    #solution { background:var(--c-paper); }
+
+    .solution-grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;
+    }
+
+    .waterfall { display:flex; flex-direction:column; }
+
+    .wf-row {
+      display:flex; align-items:flex-start; gap:14px;
+      padding:14px 18px; border-radius:var(--r-md);
+      background:var(--c-white);
+      border:1px solid var(--c-paper-line);
+      margin-bottom:8px;
+      margin-left:calc(var(--depth,0) * 22px);
+      transition:all var(--t-fast);
+      cursor:default;
+    }
+    .wf-row:hover {
+      border-color: var(--c-gold);
+      box-shadow: 0 4px 16px rgba(200,164,74,.12);
+      transform:translateX(4px);
+    }
+    .wf-row.highlight {
+      background:var(--c-ink-on-paper);
+      border-color:rgba(200,164,74,.35);
+    }
+    .wf-row.highlight .wf-text { color:#EBF0FF; }
+    .wf-row.highlight .wf-sub  { color:#7C97BF; }
+    .wf-row.success { background:rgba(39,174,96,.04); border-color:rgba(39,174,96,.22); }
+    .wf-row.success .wf-num { color:#27AE60; background:rgba(39,174,96,.1); border-color:rgba(39,174,96,.25); }
+
+    .wf-num {
+      min-width:28px; height:28px; border-radius:6px;
+      background:rgba(200,164,74,.1); border:1px solid rgba(200,164,74,.22);
+      color:var(--c-gold);
+      font-family:'DM Mono',monospace; font-size:.65rem; font-weight:500;
+      display:flex; align-items:center; justify-content:center;
+      flex-shrink:0; margin-top:1px;
+    }
+    .wf-text { font-size:.87rem; font-weight:600; color:var(--c-ink-on-paper); }
+    .wf-sub  { font-size:.75rem; color:var(--c-ink-on-paper-2); margin-top:2px; }
+
+    .wf-connector {
+      width:1px; height:8px;
+      background:linear-gradient(to bottom,var(--c-paper-line),transparent);
+      margin:0 0 0 35px;
+    }
+
+    /* ================================================================
+       §4  PLATFORM MODULES
+    ================================================================ */
+    #platform { background:var(--c-ink); }
+
+    .modules-header { text-align:center; margin-bottom:60px; }
+    .modules-header .s-eyebrow { justify-content:center; }
+    .modules-header .s-eyebrow::before { display:none; }
+    .modules-header .s-body { max-width:560px; margin:0 auto; text-align:center; }
+
+    .modules-grid {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:14px;
+    }
+
+    .mod-card {
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--c-ink-stroke);
+      border-radius:var(--r-xl); padding:28px 22px;
+      transition:all var(--t-med); cursor:default;
+      position:relative; overflow:hidden;
+    }
+    .mod-card::after {
+      content:''; position:absolute; top:0; left:0; right:0;
+      height:2px; opacity:0;
+      background:linear-gradient(to right,transparent,var(--c-gold),transparent);
+      transition:opacity var(--t-med);
+    }
+    .mod-card:hover {
+      background:rgba(255,255,255,.06);
+      border-color:rgba(200,164,74,.3);
+      transform:translateY(-5px);
+      box-shadow:var(--shadow-md);
+    }
+    .mod-card:hover::after { opacity:1; }
+
+    .mod-icon {
+      width:46px; height:46px; border-radius:var(--r-md);
+      background:var(--c-gold-glow);
+      border:1px solid var(--c-gold-ring);
+      display:flex; align-items:center; justify-content:center;
+      color:var(--c-gold); margin-bottom:16px;
+    }
+    .mod-n   { font-family:'DM Mono',monospace; font-size:.62rem; color:var(--c-text-3); letter-spacing:.1em; margin-bottom:6px; }
+    .mod-name{ font-size:.92rem; font-weight:600; color:var(--c-text); margin-bottom:8px; line-height:1.3; }
+    .mod-desc{ font-size:.78rem; color:var(--c-text-2); line-height:1.55; }
+
+    /* ================================================================
+       §5  ALIGNMENT
+    ================================================================ */
+    #alignment { background:var(--c-ink-light); }
+
+    .align-grid {
+      display:grid; grid-template-columns:1fr 1.1fr; gap:80px; align-items:start;
+    }
+
+    .fw-list { display:flex; flex-direction:column; gap:11px; }
+
+    .fw-item {
+      display:flex; align-items:flex-start; gap:14px;
+      padding:16px 18px; border-radius:var(--r-md);
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--c-ink-stroke);
+      transition:all var(--t-fast);
+    }
+    .fw-item:hover { background:rgba(255,255,255,.055); border-color:rgba(200,164,74,.28); }
+
+    .fw-badge {
+      background:rgba(200,164,74,.1); border:1px solid rgba(200,164,74,.24);
+      border-radius:var(--r-sm); padding:4px 10px;
+      font-family:'DM Mono',monospace; font-size:.62rem;
+      font-weight:500; color:var(--c-gold);
+      white-space:nowrap; flex-shrink:0; margin-top:2px;
+    }
+    .fw-text h4 { font-size:.88rem; font-weight:600; color:var(--c-text); margin-bottom:3px; }
+    .fw-text p  { font-size:.77rem; color:var(--c-text-2); line-height:1.45; }
+
+    /* tech specs panel */
+    .tech-panel {
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--c-ink-stroke);
+      border-radius:var(--r-xl); padding:28px;
+    }
+    .tech-panel h3 {
+      font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:600;
+      color:var(--c-text); margin-bottom:20px;
+    }
+    .tech-rows { display:flex; flex-direction:column; gap:10px; }
+    .tech-row {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:10px 14px; border-radius:var(--r-sm);
+      background:rgba(255,255,255,.02);
+      border:1px solid rgba(255,255,255,.04);
+    }
+    .tech-row-k { font-size:.78rem; color:var(--c-text-2); }
+    .tech-row-v {
+      font-family:'DM Mono',monospace; font-size:.72rem;
+      color:var(--c-gold-hi);
+      background:rgba(200,164,74,.08); border:1px solid rgba(200,164,74,.16);
+      border-radius:4px; padding:3px 9px;
+    }
+
+    /* ================================================================
+       §6  ROADMAP
+    ================================================================ */
+    #roadmap { background:var(--c-paper); }
+
+    .roadmap-head { text-align:center; margin-bottom:56px; }
+
+    .rm-track {
+      position:relative; height:2px;
+      background:var(--c-paper-line);
+      margin-bottom:40px;
+    }
+    .rm-fill {
+      height:100%; width:100%;
+      background:linear-gradient(to right,var(--c-gold),var(--c-gold-hi));
+    }
+
+    .rm-grid {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:20px;
+    }
+
+    .rm-phase { position:relative; }
+
+    .rm-dot {
+      width:12px; height:12px; background:var(--c-gold); border-radius:50%;
+      margin-bottom:22px; position:relative; z-index:1;
+      box-shadow:0 0 0 4px rgba(200,164,74,.18),0 0 0 8px rgba(200,164,74,.07);
+    }
+    .rm-period {
+      font-family:'DM Mono',monospace; font-size:.67rem;
+      color:var(--c-gold); letter-spacing:.1em; margin-bottom:8px;
+    }
+    .rm-card {
+      background:var(--c-white);
+      border:1px solid var(--c-paper-line);
+      border-radius:var(--r-lg); padding:22px 20px;
+      transition:all var(--t-med);
+    }
+    .rm-card:hover {
+      border-color:rgba(200,164,74,.35);
+      box-shadow:0 8px 28px rgba(200,164,74,.1);
+      transform:translateY(-3px);
+    }
+    .rm-card h3 { font-size:1rem; font-weight:700; color:var(--c-ink-on-paper); margin-bottom:12px; }
+    .rm-items { list-style:none; display:flex; flex-direction:column; gap:7px; }
+    .rm-items li {
+      font-size:.8rem; color:var(--c-ink-on-paper-2);
+      display:flex; align-items:flex-start; gap:8px; line-height:1.45;
+    }
+    .rm-items li::before {
+      content:''; width:5px; height:5px;
+      background:var(--c-gold); border-radius:50%;
+      flex-shrink:0; margin-top:5px;
+    }
+
+    /* ================================================================
+       §7  ROI
+    ================================================================ */
+    #roi { background:var(--c-ink-mid); }
+
+    .roi-grid {
+      display:grid; grid-template-columns:1fr 1.15fr; gap:80px; align-items:start;
+    }
+
+    .roi-formula {
+      margin-top:28px;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--c-ink-stroke);
+      border-radius:var(--r-lg); padding:24px;
+    }
+    .roi-f-label {
+      font-family:'DM Mono',monospace; font-size:.65rem;
+      color:var(--c-text-3); letter-spacing:.14em; text-transform:uppercase;
+      margin-bottom:12px;
+    }
+    .roi-f-eq {
+      font-family:'DM Mono',monospace; font-size:.8rem;
+      color:var(--c-gold-hi); line-height:1.8;
+      background:rgba(0,0,0,.2); border-radius:8px;
+      padding:16px; border-left:2px solid var(--c-gold);
+    }
+
+    .roi-metrics {
+      display:grid; grid-template-columns:1fr 1fr; gap:14px;
+    }
+    .roi-m {
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--c-ink-stroke);
+      border-radius:var(--r-lg); padding:22px;
+      transition:all var(--t-fast);
+    }
+    .roi-m:hover { border-color:rgba(200,164,74,.28); background:rgba(255,255,255,.055); }
+    .roi-m-v {
+      font-family:'Playfair Display',serif;
+      font-size:2.4rem; font-weight:700; color:var(--c-gold);
+      line-height:1; margin-bottom:5px;
+    }
+    .roi-m-v small { font-size:1.1rem; color:var(--c-gold-hi); }
+    .roi-m-l { font-size:.82rem; font-weight:600; color:var(--c-text); margin-bottom:4px; }
+    .roi-m-s { font-size:.75rem; color:var(--c-text-2); line-height:1.45; }
+
+    /* ================================================================
+       §8  COMPLIANCE MATRIX
+    ================================================================ */
+    #compliance {
+      background:var(--c-ink-light);
+      min-height:auto; /* tall content */
+      align-items:flex-start; padding-top:calc(var(--nav-h) + 56px);
+    }
+
+    .matrix-wrap {
+      margin-top:44px; border-radius:var(--r-lg);
+      border:1px solid var(--c-ink-stroke); overflow:hidden;
+    }
+    table.matrix {
+      width:100%; border-collapse:collapse; font-size:.8rem;
+    }
+    table.matrix thead tr {
+      background:rgba(255,255,255,.04);
+      border-bottom:1px solid var(--c-ink-stroke);
+    }
+    table.matrix th {
+      padding:13px 20px; text-align:left;
+      font-family:'DM Mono',monospace; font-size:.63rem;
+      font-weight:500; letter-spacing:.12em; text-transform:uppercase;
+      color:var(--c-text-3); white-space:nowrap;
+    }
+    table.matrix td {
+      padding:14px 20px; color:var(--c-text-2);
+      border-bottom:1px solid rgba(255,255,255,.04);
+      vertical-align:top; line-height:1.45;
+    }
+    table.matrix tr:last-child td { border-bottom:none; }
+    table.matrix tr:hover td { background:rgba(255,255,255,.02); color:var(--c-text); }
+    table.matrix td:first-child { font-weight:600; color:var(--c-text); min-width:180px; }
+    table.matrix td:nth-child(2) { color:var(--c-text-3); }
+
+    .tag {
+      display:inline-flex; align-items:center;
+      background:rgba(39,174,96,.1); border:1px solid rgba(39,174,96,.22);
+      border-radius:4px; padding:2px 8px;
+      font-family:'DM Mono',monospace; font-size:.62rem;
+      color:var(--c-ok); letter-spacing:.05em;
+    }
+    .tag.amber {
+      background:rgba(230,126,34,.1); border-color:rgba(230,126,34,.22); color:var(--c-warn);
+    }
+
+    /* ================================================================
+       §9  CTA
+    ================================================================ */
+    #cta {
+      background:var(--c-ink);
+      justify-content:center; text-align:center;
+    }
+    .cta-inner { max-width:680px; margin:0 auto; }
+
+    .cta-title {
+      font-family:'Playfair Display',serif;
+      font-size:clamp(2.8rem,6vw,5rem);
+      font-weight:700; line-height:1.07;
+      color:var(--c-white); margin-bottom:18px; letter-spacing:-.015em;
+    }
+    .cta-title em { color:var(--c-gold); font-style:italic; }
+    .cta-sub { font-size:1.05rem; color:var(--c-text-2); margin-bottom:44px; line-height:1.7; }
+    .cta-actions { display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-bottom:52px; }
+    .cta-rule { width:40px; height:1px; background:var(--c-ink-stroke); margin:0 auto 28px; }
+    .cta-contact { font-size:.83rem; color:var(--c-text-3); }
+    .cta-contact a { color:var(--c-gold); }
+    .cta-contact a:hover { text-decoration:underline; }
+
+    /* ================================================================
+       FOOTER
+    ================================================================ */
+    footer {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:28px 56px;
+      border-top:1px solid var(--c-ink-stroke);
+      background:var(--c-ink);
+    }
+    .foot-brand {
+      font-family:'Playfair Display',serif; font-size:.88rem;
+      font-weight:600; color:var(--c-text-3);
+    }
+    .foot-brand span { color:var(--c-gold); }
+    .foot-copy {
+      font-family:'DM Mono',monospace; font-size:.7rem;
+      color:var(--c-text-3); letter-spacing:.05em;
+    }
+
+    /* ================================================================
+       RESPONSIVE
+    ================================================================ */
+    @media(max-width:1100px){
+      section{padding:calc(var(--nav-h)+48px) 48px 64px}
+      .challenge-grid,.solution-grid,.align-grid,.roi-grid{grid-template-columns:1fr;gap:48px}
+      .modules-grid{grid-template-columns:repeat(2,1fr)}
+      .rm-grid{grid-template-columns:repeat(2,1fr)}
+      #nav{padding:0 28px}
+      footer{padding:22px 32px}
+    }
+    @media(max-width:680px){
+      section{padding:calc(var(--nav-h)+28px) 20px 52px}
+      .nav-links{display:none}
+      .modules-grid,.roi-metrics{grid-template-columns:1fr}
+      .rm-grid{grid-template-columns:1fr}
+      .hero-stats{flex-direction:column}
+      .h-stat{border-right:none!important;border-bottom:1px solid var(--c-ink-stroke)}
+      footer{flex-direction:column;gap:10px;text-align:center;padding:20px}
+      #counter{display:none}
+    }
+  </style>
+</head>
+<body>
+
+<!-- Progress -->
+<div id="progress"></div>
+
+<!-- NAV ============================================================ -->
+<nav id="nav">
+  <a href="#hero" class="nav-brand">
+    <div class="nav-logo-wrap">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <path d="M9 1L17 9L9 17L1 9L9 1Z" stroke="#C8A44A" stroke-width="1.4" fill="none"/>
+        <path d="M9 5L13 9L9 13L5 9L9 5Z" fill="#C8A44A"/>
+      </svg>
+    </div>
+    GRC<span>-Nexus</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#challenge">Challenge</a></li>
+    <li><a href="#solution">Solution</a></li>
+    <li><a href="#platform">Platform</a></li>
+    <li><a href="#alignment">Alignment</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#roi">Value</a></li>
+    <li><a href="#compliance">Compliance</a></li>
+    <li><a href="#cta" class="nav-cta">Request Demo</a></li>
+  </ul>
+</nav>
+
+<!-- Counter & keyboard hint -->
+<div id="counter"><span class="cur" id="cur">01</span> / <span id="tot">08</span></div>
+<div id="kbd-hint">← → Arrow keys to navigate &nbsp;·&nbsp; ESC to reset</div>
+
+<!-- §1 HERO ========================================================= -->
+<section id="hero">
+  <div class="hero-canvas">
+    <div class="hero-grid"></div>
+    <div class="hero-radial"></div>
+    <canvas id="hero-canvas" style="position:absolute;inset:0;opacity:.35;pointer-events:none;"></canvas>
+  </div>
+
+  <div class="hero-body">
+    <div class="hero-pill">
+      <div class="pill-dot"></div>
+      Zimbabwe eGovernance Platform &nbsp;·&nbsp; NDS2 2026–2030 Aligned
+    </div>
+
+    <h1 class="hero-h1">GRC-Nexus</h1>
+    <p class="hero-sub">Zimbabwe's National Governance Operating System</p>
+    <p class="hero-lede">
+      One integrated platform connecting national strategy, institutional risk,
+      board oversight, compliance, and delivery performance —
+      from NDS2 priorities to operational accountability.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#platform" class="btn btn-gold">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Explore Platform
+      </a>
+      <a href="#cta" class="btn btn-outline">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Request Briefing
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="h-stat">
+        <div class="h-stat-v">8</div>
+        <div class="h-stat-l">Integrated Modules</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-v">30+</div>
+        <div class="h-stat-l">SOEs Supported</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-v">6</div>
+        <div class="h-stat-l">Legal Frameworks</div>
+      </div>
+      <div class="h-stat">
+        <div class="h-stat-v">24mo</div>
+        <div class="h-stat-l">Delivery Roadmap</div>
+      </div>
+    </div>
+  </div>
+
+  <a href="#challenge" class="hero-scroll">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    Scroll
+  </a>
+</section>
+
+<!-- §2 CHALLENGE ==================================================== -->
+<section id="challenge">
+  <div class="s-inner">
+    <div class="challenge-grid">
+      <div>
+        <div class="s-eyebrow rv">01 — The Problem</div>
+        <h2 class="s-title rv d1">Zimbabwe's <em>Governance Gap</em></h2>
+        <p class="s-body rv d2">
+          Zimbabwe's governance reform agenda is advanced in policy — fragmented in execution.
+          MDAs and SOEs operate in risk silos, reporting manually, with no live connection
+          between NDS2 commitments and daily institutional controls.
+        </p>
+        <div class="rule rv d3"></div>
+        <p class="s-body rv d3" style="font-size:.9rem">
+          NDS1 lessons are unambiguous: weak inter-agency coordination, delayed disbursements,
+          inadequate monitoring frameworks, and uneven risk maturity across institutions
+          compound to undermine delivery and erode institutional credibility.
+        </p>
+      </div>
+
+      <div class="prob-cards">
+        <div class="prob-card rv d1">
+          <div class="prob-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          </div>
+          <div>
+            <h3>Fragmented Risk Silos</h3>
+            <p>MDAs maintain separate risk registers with no standardized vocabulary, no cross-agency visibility, and no link to strategic objectives.</p>
+            <div class="prob-stat">
+              <span class="n">14→10</span>
+              <span class="l">Thematic areas streamlined in NDS2 — direct response to NDS1 coordination failures</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="prob-card rv d2">
+          <div class="prob-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <h3>Manual Compliance Reporting</h3>
+            <p>Boards and oversight bodies rely on manually compiled reports — slow, error-prone, and detached from real-time operational data.</p>
+            <div class="prob-stat">
+              <span class="n">&lt; 68%</span>
+              <span class="l">Court clearance rates — a system-wide accountability lag indicator</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="prob-card rv d3">
+          <div class="prob-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          </div>
+          <div>
+            <h3>Strategy-Execution Disconnect</h3>
+            <p>NDS2 commitments live at policy level. No auditable system links national priorities to departmental action plans, risk owners, and performance contracts.</p>
+            <div class="prob-stat">
+              <span class="n">67.7%</span>
+              <span class="l">Average Citizen Satisfaction Index under NDS1 — below the 70% Vision 2030 target</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- §3 SOLUTION ===================================================== -->
+<section id="solution">
+  <div class="s-inner">
+    <div class="solution-grid">
+      <div>
+        <div class="s-eyebrow rv">02 — The Solution</div>
+        <h2 class="s-title on-paper rv d1">The Governance <em>Waterfall</em></h2>
+        <p class="s-body on-paper rv d2">
+          GRC-Nexus uses a national-to-operational cascade so that no activity is detached from strategic purpose. Every risk, control, action, and performance measure maps to an approved objective.
+        </p>
+        <div class="rule rv d3"></div>
+        <p class="s-body on-paper rv d3" style="font-size:.9rem">
+          This is not a reporting tool. It is a <strong>governance execution engine</strong> — converting policy commitments into daily operational controls with a complete, immutable audit trail from NDS2 priorities all the way to statutory compliance evidence.
+        </p>
+        <div style="margin-top:28px" class="rv d4">
+          <a href="#platform" class="btn btn-ghost">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            View all 8 modules
+          </a>
+        </div>
+      </div>
+
+      <div class="waterfall rv d2">
+        <div class="wf-row highlight" style="--depth:0">
+          <div class="wf-num" style="background:rgba(200,164,74,.2);border-color:rgba(200,164,74,.4)">01</div>
+          <div>
+            <div class="wf-text">NDS2 National Priorities &amp; Sector KRAs</div>
+            <div class="wf-sub">10 priority areas aligned to Vision 2030</div>
+          </div>
+        </div>
+        <div class="wf-connector"></div>
+        <div class="wf-row" style="--depth:.6">
+          <div class="wf-num">02</div>
+          <div>
+            <div class="wf-text">Institutional 5-Year Strategic Goals</div>
+            <div class="wf-sub">MDA and SOE strategic plans</div>
+          </div>
+        </div>
+        <div class="wf-connector"></div>
+        <div class="wf-row" style="--depth:1.2">
+          <div class="wf-num">03</div>
+          <div>
+            <div class="wf-text">Annual Plans &amp; Performance Contracts</div>
+            <div class="wf-sub">IRBM-linked KPIs with owners and due dates</div>
+          </div>
+        </div>
+        <div class="wf-connector"></div>
+        <div class="wf-row" style="--depth:1.8">
+          <div class="wf-num">04</div>
+          <div>
+            <div class="wf-text">Departmental Action Plans</div>
+            <div class="wf-sub">Accountable owners at division level</div>
+          </div>
+        </div>
+        <div class="wf-connector"></div>
+        <div class="wf-row" style="--depth:2.4">
+          <div class="wf-num">05</div>
+          <div>
+            <div class="wf-text">Linked Risks, Controls &amp; Treatments</div>
+            <div class="wf-sub">5×5 ERM scoring with appetite thresholds</div>
+          </div>
+        </div>
+        <div class="wf-connector"></div>
+        <div class="wf-row" style="--depth:1.2">
+          <div class="wf-num">06</div>
+          <div>
+            <div class="wf-text">Board &amp; Committee Oversight</div>
+            <div class="wf-sub">Digital packs, resolutions, immutable audit trail</div>
+          </div>
+        </div>
+        <div class="wf-connector"></div>
+        <div class="wf-row success" style="--depth:.4">
+          <div class="wf-num">07</div>
+          <div>
+            <div class="wf-text">Compliance Reporting &amp; Audit Assurance</div>
+            <div class="wf-sub">Statutory reports, findings, evidence retention</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- §4 PLATFORM ===================================================== -->
+<section id="platform">
+  <div class="s-inner">
+    <div class="modules-header">
+      <div class="s-eyebrow rv">03 — Platform Capabilities</div>
+      <h2 class="s-title rv d1">Eight Integrated <em>Modules</em></h2>
+      <p class="s-body rv d2">
+        A unified stack covering every dimension of institutional governance — from strategic planning to internal audit, board management to vendor risk.
+      </p>
+    </div>
+
+    <div class="modules-grid">
+      <div class="mod-card rv d1">
+        <div class="mod-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
+        <div class="mod-n">MODULE 01</div>
+        <div class="mod-name">Strategic Planning &amp; NDS2 Alignment</div>
+        <div class="mod-desc">Central NDS2 pillar library with mandatory objective-tagging. KPI baselines, targets, owners, and automated strategic review triggers on exception.</div>
+      </div>
+      <div class="mod-card rv d2">
+        <div class="mod-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="mod-n">MODULE 02</div>
+        <div class="mod-name">Enterprise Risk Management</div>
+        <div class="mod-desc">Risk registers linked to strategic objectives. 5×5 likelihood-impact scoring, appetite thresholds, treatment workflows, real-time heatmaps and trend analytics.</div>
+      </div>
+      <div class="mod-card rv d3">
+        <div class="mod-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="mod-n">MODULE 03</div>
+        <div class="mod-name">Board Management &amp; Corporate Governance</div>
+        <div class="mod-desc">Digital board contract workflows, Section 25 evaluations, meeting lifecycle management, immutable decision audit trail, and policy repositories with annual sign-off.</div>
+      </div>
+      <div class="mod-card rv d4">
+        <div class="mod-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <div class="mod-n">MODULE 04</div>
+        <div class="mod-name">Compliance &amp; Policy Management</div>
+        <div class="mod-desc">Statutory obligations register with due-date and evidence tracking. Compliance attestations, policy lifecycle management, and real-time posture dashboards.</div>
+      </div>
+      <div class="mod-card rv d1">
+        <div class="mod-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+        <div class="mod-n">MODULE 05</div>
+        <div class="mod-name">Incident, Whistleblower &amp; Case Management</div>
+        <div class="mod-desc">Anonymous and named multi-channel intake. Role-based segregation, triage-to-closure workflows, and confidentiality controls for protected cases.</div>
+      </div>
+      <div class="mod-card rv d2">
+        <div class="mod-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <div class="mod-n">MODULE 06</div>
+        <div class="mod-name">Internal Audit &amp; Combined Assurance</div>
+        <div class="mod-desc">Audit universe and annual plan management, finding lifecycle with root-cause and remediation tracking, and audit committee dashboards for open and closed findings.</div>
+      </div>
+      <div class="mod-card rv d3">
+        <div class="mod-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+        <div class="mod-n">MODULE 07</div>
+        <div class="mod-name">Vendor &amp; Third-Party Risk</div>
+        <div class="mod-desc">Supplier onboarding with statutory compliance checks (NSSA, ZIMRA, PRAZ), third-party risk assessments, and eGP-linked contract risk obligation tracking.</div>
+      </div>
+      <div class="mod-card rv d4">
+        <div class="mod-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></div>
+        <div class="mod-n">MODULE 08</div>
+        <div class="mod-name">Reporting &amp; Decision Intelligence</div>
+        <div class="mod-desc">Executive dashboards with drill-down layers, statutory report generation for CGU and oversight bodies, and cross-module analytics for strategy-risk-compliance alignment.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- §5 ALIGNMENT ==================================================== -->
+<section id="alignment">
+  <div class="s-inner">
+    <div class="align-grid">
+      <div>
+        <div class="s-eyebrow rv">04 — Regulatory Alignment</div>
+        <h2 class="s-title rv d1">Built on Zimbabwe's <em>Legal Framework</em></h2>
+        <p class="s-body rv d2">
+          Every module is designed around the specific compliance obligations of Zimbabwe's public sector. GRC-Nexus is not an adapted generic platform — it is purpose-built for MDAs and SOEs operating under Zimbabwean law.
+        </p>
+        <div class="rule rv d3"></div>
+        <p class="s-body rv d3" style="font-size:.88rem">
+          Compliance is enforced by design. The platform's workflow engine will not permit a critical governance step to proceed without required evidence, approvals, and documentation.
+        </p>
+
+        <div class="tech-panel rv d4" style="margin-top:32px">
+          <h3>Technical Baseline</h3>
+          <div class="tech-rows">
+            <div class="tech-row"><span class="tech-row-k">Encryption at rest</span><span class="tech-row-v">AES-256</span></div>
+            <div class="tech-row"><span class="tech-row-k">Encryption in transit</span><span class="tech-row-v">TLS 1.3+</span></div>
+            <div class="tech-row"><span class="tech-row-k">Authentication</span><span class="tech-row-v">MFA + SAML/OIDC</span></div>
+            <div class="tech-row"><span class="tech-row-k">Audit log</span><span class="tech-row-v">Immutable</span></div>
+            <div class="tech-row"><span class="tech-row-k">Deployment</span><span class="tech-row-v">Cloud · On-premises</span></div>
+            <div class="tech-row"><span class="tech-row-k">Data residency</span><span class="tech-row-v">Southern Africa</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fw-list">
+        <div class="fw-item rv d1">
+          <span class="fw-badge">NDS2</span>
+          <div class="fw-text">
+            <h4>National Development Strategy 2 (2026–2030)</h4>
+            <p>Strategy cascade, KPI ownership, and IRBM performance tracking across all 10 NDS2 priority areas.</p>
+          </div>
+        </div>
+        <div class="fw-item rv d2">
+          <span class="fw-badge">PECOGA</span>
+          <div class="fw-text">
+            <h4>Public Entities Corporate Governance Act [Ch. 10:31]</h4>
+            <p>Board contract workflows, Section 25 evaluations, governance compliance dashboards, and SOE oversight tooling.</p>
+          </div>
+        </div>
+        <div class="fw-item rv d3">
+          <span class="fw-badge">PPDPA</span>
+          <div class="fw-text">
+            <h4>Public Procurement &amp; Disposal of Public Assets Act [Ch. 22:23]</h4>
+            <p>Vendor statutory document verification — NSSA, ZIMRA, PRAZ registration — enforced before contract activation.</p>
+          </div>
+        </div>
+        <div class="fw-item rv d4">
+          <span class="fw-badge">CDA 12:07</span>
+          <div class="fw-text">
+            <h4>Cyber &amp; Data Protection Act [Chapter 12:07]</h4>
+            <p>AES-256 encryption, immutable audit logs, RBAC with least-privilege defaults, MFA, and incident response workflows.</p>
+          </div>
+        </div>
+        <div class="fw-item rv d5">
+          <span class="fw-badge">PSRF 2023</span>
+          <div class="fw-text">
+            <h4>Public Sector Risk Framework (2023) &amp; ISO 31000:2018</h4>
+            <p>Standardized risk lifecycle, 5×5 scoring, appetite statements, treatment tracking, and ERM reporting aligned to the MoFEDIP mandate.</p>
+          </div>
+        </div>
+        <div class="fw-item rv d6">
+          <span class="fw-badge">IRBM</span>
+          <div class="fw-text">
+            <h4>Integrated Results-Based Management Framework</h4>
+            <p>Performance contracts, KPI scorecards, quarterly reporting cycles, and Citizen Satisfaction Index tracking linked to OPC oversight.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- §6 ROADMAP ====================================================== -->
+<section id="roadmap">
+  <div class="s-inner">
+    <div class="roadmap-head">
+      <div class="s-eyebrow rv center">05 — Implementation</div>
+      <h2 class="s-title on-paper rv d1" style="text-align:center">24-Month <em>Delivery Roadmap</em></h2>
+      <p class="s-body on-paper rv d2" style="text-align:center;margin:0 auto">
+        A phased, stage-gate model with milestone-based procurement and measurable acceptance criteria at every phase boundary.
+      </p>
+    </div>
+
+    <div class="rv d2">
+      <div class="rm-track"><div class="rm-fill"></div></div>
+    </div>
+
+    <div class="rm-grid">
+      <div class="rm-phase rv d1">
+        <div class="rm-dot"></div>
+        <div class="rm-period">MONTHS 01 – 04</div>
+        <div class="rm-card">
+          <h3>Phase 1: Foundation</h3>
+          <ul class="rm-items">
+            <li>Programme mobilisation and governance setup</li>
+            <li>Baseline architecture and data standards</li>
+            <li>Pilot institution selection and readiness assessment</li>
+            <li>Stakeholder alignment workshops</li>
+          </ul>
+        </div>
+      </div>
+      <div class="rm-phase rv d2">
+        <div class="rm-dot"></div>
+        <div class="rm-period">MONTHS 05 – 10</div>
+        <div class="rm-card">
+          <h3>Phase 2: Core Integrity Stack</h3>
+          <ul class="rm-items">
+            <li>Strategic planning and KPI workflows live</li>
+            <li>ERM, compliance, and internal audit modules</li>
+            <li>Board management core deployed</li>
+            <li>Statutory reporting baseline</li>
+          </ul>
+        </div>
+      </div>
+      <div class="rm-phase rv d3">
+        <div class="rm-dot"></div>
+        <div class="rm-period">MONTHS 11 – 16</div>
+        <div class="rm-card">
+          <h3>Phase 3: Advanced Governance</h3>
+          <ul class="rm-items">
+            <li>Incident and whistleblower capabilities</li>
+            <li>Vendor risk and enhanced analytics</li>
+            <li>Cross-institution reporting and committee packs</li>
+            <li>Integration with ERP and collaboration platforms</li>
+          </ul>
+        </div>
+      </div>
+      <div class="rm-phase rv d4">
+        <div class="rm-dot"></div>
+        <div class="rm-period">MONTHS 17 – 24</div>
+        <div class="rm-card">
+          <h3>Phase 4: Scale &amp; Optimise</h3>
+          <ul class="rm-items">
+            <li>Additional institution onboarding</li>
+            <li>Automation tuning and predictive indicators</li>
+            <li>Continuous control monitoring</li>
+            <li>Full NDS2 KPI integration at scale</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- §7 ROI ========================================================== -->
+<section id="roi">
+  <div class="s-inner">
+    <div class="roi-grid">
+      <div>
+        <div class="s-eyebrow rv">06 — Investment Case</div>
+        <h2 class="s-title rv d1">Measurable <em>Value</em></h2>
+        <p class="s-body rv d2">
+          GRC-Nexus is a governance infrastructure investment with three clear value levers: efficiency gains, control effectiveness, and delivery reliability — each measured against a documented baseline.
+        </p>
+
+        <div class="roi-formula rv d3">
+          <div class="roi-f-label">ROI Measurement Formula</div>
+          <div class="roi-f-eq">ROI (%) =<br>  ((Total Benefits − Programme Cost)<br>   ÷ Programme Cost) × 100<br><br>Assessed over 24-month<br>baseline-vs-post deployment cycle</div>
+        </div>
+
+        <p class="rv d4" style="font-size:.82rem;color:var(--c-text-3);margin-top:20px;line-height:1.65">
+          Funder confidence signals: milestone-based procurement, independent QA checkpoints, live benefit realization dashboards, and risk-adjusted contingency governance at every phase gate.
+        </p>
+      </div>
+
+      <div class="roi-metrics">
+        <div class="roi-m rv d1">
+          <div class="roi-m-v"><span class="counter" data-target="30">0</span>–60<small>%</small></div>
+          <div class="roi-m-l">Reporting Efficiency Gain</div>
+          <div class="roi-m-s">Reduction in quarterly governance report cycle time by end of Phase 3</div>
+        </div>
+        <div class="roi-m rv d2">
+          <div class="roi-m-v"><span class="counter" data-target="25">0</span>–50<small>%</small></div>
+          <div class="roi-m-l">Compliance Improvement</div>
+          <div class="roi-m-s">Fewer overdue statutory obligations and repeat audit findings</div>
+        </div>
+        <div class="roi-m rv d3">
+          <div class="roi-m-v"><span class="counter" data-target="40">0</span>–60<small>%</small></div>
+          <div class="roi-m-l">Faster Risk Response</div>
+          <div class="roi-m-s">Reduction in average time from risk identification to treatment initiation</div>
+        </div>
+        <div class="roi-m rv d4">
+          <div class="roi-m-v">↑<small> sustained</small></div>
+          <div class="roi-m-l">Board Effectiveness</div>
+          <div class="roi-m-s">Increased action closure rates and faster decision cycles across enrolled institutions</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- §8 COMPLIANCE MATRIX ============================================ -->
+<section id="compliance">
+  <div class="s-inner">
+    <div class="s-eyebrow rv">07 — Regulatory Compliance Matrix</div>
+    <h2 class="s-title rv d1" style="max-width:680px">Platform Controls by <em>Legal Instrument</em></h2>
+    <p class="s-body rv d2" style="max-width:640px">
+      Every workflow in GRC-Nexus maps to a specific regulatory obligation. Compliance is not a checkbox — it is the output of every completed governance action.
+    </p>
+
+    <div class="matrix-wrap rv d3">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th>Instrument</th>
+            <th>Primary Requirement</th>
+            <th>Platform Control Response</th>
+            <th>Evidence Output</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Constitution of Zimbabwe</td>
+            <td>Rule of law, accountability, devolution performance</td>
+            <td>Strategic KPI tracking, provincial scorecards, auditable action ownership</td>
+            <td>Performance dashboards, governance reports, devolution records</td>
+            <td><span class="tag">COVERED</span></td>
+          </tr>
+          <tr>
+            <td>PECOGA [Ch. 10:31]</td>
+            <td>Board oversight, performance contracts, evaluations</td>
+            <td>Board contract workflows, Section 25 evaluation tools, board action tracking</td>
+            <td>Signed contracts, evaluation records, board resolution logs</td>
+            <td><span class="tag">COVERED</span></td>
+          </tr>
+          <tr>
+            <td>PPDPA [Ch. 22:23]</td>
+            <td>Transparent procurement lifecycle, statutory document gatekeeping</td>
+            <td>Vendor onboarding with NSSA/ZIMRA/PRAZ validation, eGP-linked approval trails</td>
+            <td>Tender evaluation records, award logs, contract status reports</td>
+            <td><span class="tag">COVERED</span></td>
+          </tr>
+          <tr>
+            <td>Cyber &amp; Data Protection Act [Ch. 12:07]</td>
+            <td>Data protection, cybersecurity governance</td>
+            <td>AES-256 encryption, RBAC, immutable audit logs, incident workflow support</td>
+            <td>Access logs, security configuration evidence, incident records</td>
+            <td><span class="tag">COVERED</span></td>
+          </tr>
+          <tr>
+            <td>Public Sector Risk Framework (2023)</td>
+            <td>Risk appetite, risk registers, ERM institutionalization</td>
+            <td>Objective-linked risk registers, 5×5 scoring, appetite thresholds, treatment escalation</td>
+            <td>Risk heatmaps, treatment status reports, threshold breach logs</td>
+            <td><span class="tag">COVERED</span></td>
+          </tr>
+          <tr>
+            <td>ISO 31000:2018</td>
+            <td>Systematic enterprise risk process</td>
+            <td>Standardized risk lifecycle and review cadence with ownership</td>
+            <td>Risk assessment history, review and closure evidence</td>
+            <td><span class="tag">COVERED</span></td>
+          </tr>
+          <tr>
+            <td>IRBM Framework</td>
+            <td>Performance planning, monitoring, and reporting discipline</td>
+            <td>Strategy cascade module, KPI ownership, period reporting workflows</td>
+            <td>KPI scorecards, quarterly and annual performance packs</td>
+            <td><span class="tag">COVERED</span></td>
+          </tr>
+          <tr>
+            <td>Statutory reporting obligations (CGU / line ministry)</td>
+            <td>Timely, accurate, and auditable submissions</td>
+            <td>One-click templated statutory report generation and controlled approvals</td>
+            <td>Submission-ready reports, approval logs, report archives</td>
+            <td><span class="tag">COVERED</span></td>
+          </tr>
+          <tr>
+            <td>Internal audit and assurance expectations</td>
+            <td>Findings tracking and closure accountability</td>
+            <td>Audit module with finding-to-action lifecycle and escalation</td>
+            <td>Open/closed finding dashboards, remediation evidence</td>
+            <td><span class="tag">COVERED</span></td>
+          </tr>
+          <tr>
+            <td>Whistleblower &amp; ethics (policy / operational)</td>
+            <td>Protected case handling, traceable investigations</td>
+            <td>Confidential case workflows, role segregation, case audit trails</td>
+            <td>Case records, escalation history, closure documentation</td>
+            <td><span class="tag amber">PENDING LEGISLATION</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- §9 CTA ========================================================== -->
+<section id="cta">
+  <div class="s-inner">
+    <div class="cta-inner">
+      <div class="s-eyebrow rv center">08 — Begin the Transition</div>
+      <h2 class="cta-title rv d1">The Architecture<br>is <em>Ready</em></h2>
+      <p class="cta-sub rv d2">
+        GRC-Nexus is available for institutional briefings, pilot programme design, and procurement scoping.
+        The decisive factor is leadership commitment and disciplined implementation under clear ownership.
+      </p>
+      <div class="cta-actions rv d3">
+        <a href="mailto:kuziwas@gmail.com?subject=GRC-Nexus%20Briefing%20Request" class="btn btn-gold">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Request a Briefing
+        </a>
+        <a href="#platform" class="btn btn-outline">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          Explore Platform
+        </a>
+      </div>
+      <div class="cta-rule rv d4"></div>
+      <div class="cta-contact rv d4">
+        Inquiries: <a href="mailto:kuziwas@gmail.com">kuziwas@gmail.com</a>
+        &nbsp;·&nbsp; Zimbabwe eGovernance Platform Initiative
+        &nbsp;·&nbsp; NDS2 2026–2030
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER ========================================================== -->
+<footer>
+  <div class="foot-brand">GRC<span>-Nexus</span> · Zimbabwe National Governance Operating System</div>
+  <div class="foot-copy">© 2026 · Built for Vision 2030 · NDS2 2026–2030</div>
+</footer>
+
+<!-- ================================================================
+     SCRIPTS
+================================================================ -->
+<script>
+/* ---- DOM refs ---- */
+const nav    = document.getElementById('nav');
+const bar    = document.getElementById('progress');
+const curEl  = document.getElementById('cur');
+const totEl  = document.getElementById('tot');
+const hint   = document.getElementById('kbd-hint');
+const secs   = Array.from(document.querySelectorAll('section'));
+const links  = Array.from(document.querySelectorAll('.nav-links a:not(.nav-cta)'));
+
+totEl.textContent = String(secs.length).padStart(2,'0');
+
+/* ---- Scroll handler ---- */
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+});
+function onScroll() {
+  ticking = false;
+  const sy = window.scrollY;
+  const dh = document.documentElement.scrollHeight - window.innerHeight;
+  bar.style.width = (sy / dh * 100) + '%';
+  nav.classList.toggle('scrolled', sy > 40);
+
+  // Active section
+  const mid = window.innerHeight * 0.45;
+  let idx = 0;
+  secs.forEach((s, i) => {
+    const r = s.getBoundingClientRect();
+    if (r.top <= mid && r.bottom >= mid) idx = i;
+  });
+  curEl.textContent = String(idx + 1).padStart(2,'0');
+  links.forEach(l => l.classList.remove('active'));
+  const al = document.querySelector(`.nav-links a[href="#${secs[idx].id}"]`);
+  if (al) al.classList.add('active');
+}
+
+/* ---- Reveal on scroll ---- */
+const rvEls = document.querySelectorAll('.rv');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold:.1, rootMargin:'0px 0px -32px 0px' });
+rvEls.forEach(el => io.observe(el));
+
+/* ---- Keyboard navigation ---- */
+let kidx = 0;
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+    e.preventDefault();
+    kidx = Math.min(kidx + 1, secs.length - 1);
+    secs[kidx].scrollIntoView({ behavior:'smooth' });
+  } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+    e.preventDefault();
+    kidx = Math.max(kidx - 1, 0);
+    secs[kidx].scrollIntoView({ behavior:'smooth' });
+  } else if (e.key === 'Escape' || e.key === 'Home') {
+    e.preventDefault(); kidx = 0;
+    secs[0].scrollIntoView({ behavior:'smooth' });
+  } else if (e.key === 'End') {
+    e.preventDefault(); kidx = secs.length - 1;
+    secs[kidx].scrollIntoView({ behavior:'smooth' });
+  }
+});
+// keep kidx in sync with manual scroll
+window.addEventListener('scroll', () => {
+  secs.forEach((s, i) => {
+    if (Math.abs(s.getBoundingClientRect().top) < 60) kidx = i;
+  });
+});
+
+/* ---- Hide kbd hint after 5s ---- */
+setTimeout(() => hint.classList.add('hidden'), 5000);
+
+/* ---- Counter animation ---- */
+const counters = document.querySelectorAll('.counter');
+const cio = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const target = +el.dataset.target;
+    let n = 0;
+    const step = target / 60;
+    const tick = () => {
+      n = Math.min(n + step, target);
+      el.textContent = Math.round(n);
+      if (n < target) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+    cio.unobserve(el);
+  });
+}, { threshold:.6 });
+counters.forEach(el => cio.observe(el));
+
+/* ---- Smooth anchor clicks ---- */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior:'smooth' }); }
+  });
+});
+
+/* ---- Hero particle canvas ---- */
+(function heroParticles() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, pts;
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  function init() {
+    resize();
+    pts = Array.from({length:52}, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - .5) * .35,
+      vy: (Math.random() - .5) * .35,
+      r: Math.random() * 1.8 + .6,
+    }));
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    // lines
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const dx = pts[i].x - pts[j].x;
+        const dy = pts[i].y - pts[j].y;
+        const d  = Math.sqrt(dx*dx + dy*dy);
+        if (d < 130) {
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x, pts[i].y);
+          ctx.lineTo(pts[j].x, pts[j].y);
+          ctx.strokeStyle = `rgba(200,164,74,${.18 * (1 - d/130)})`;
+          ctx.lineWidth = .6;
+          ctx.stroke();
+        }
+      }
+    }
+    // dots
+    pts.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(200,164,74,.55)';
+      ctx.fill();
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+    });
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); });
+  init(); draw();
+})();
+</script>
+
+</body>
+</html>

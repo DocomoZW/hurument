@@ -1,0 +1,9 @@
+[submodule "AIOS"]
+	path = AIOS
+	url = https://github.com/agiresearch/AIOS.git
+[submodule "Cerebrum"]
+	path = Cerebrum
+	url = https://github.com/agiresearch/Cerebrum.git
+[submodule "grc-nexus"]
+	path = grc-nexus
+	url = https://github.com/ledger101/grc-nexus.git

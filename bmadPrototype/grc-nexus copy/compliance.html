@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GRC-Nexus | Compliance</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="app-wrapper">
+
+  <nav class="topnav">
+    <span class="topnav-logo">⚡ GRC-NEXUS</span>
+    <span class="topnav-brand">Ministry of Finance — Zimbabwe</span>
+    <div class="topnav-actions">
+      <div class="topnav-icon" title="Notifications">🔔<span style="position:absolute;background:var(--danger);color:#fff;border-radius:50%;font-size:9px;padding:1px 4px;margin-top:-8px;margin-left:6px;">5</span></div>
+      <div class="topnav-avatar">TM</div>
+      <span class="topnav-user">Tendai M.</span>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-section-label">Navigation</div>
+      <ul class="sidebar-nav">
+        <li><a href="index.html"><span class="nav-icon">🏠</span> Dashboard</a></li>
+        <li><a href="strategic-planning.html"><span class="nav-icon">📊</span> Strategic Planning</a></li>
+        <li><a href="risk-register.html"><span class="nav-icon">⚠️</span> Risk Management</a></li>
+        <li><a href="board-management.html"><span class="nav-icon">👥</span> Board Governance</a></li>
+        <li><a href="compliance.html"><span class="nav-icon">✅</span> Compliance</a></li>
+        <li><a href="incidents.html"><span class="nav-icon">🚨</span> Incidents</a></li>
+        <li><a href="internal-audit.html"><span class="nav-icon">🔍</span> Internal Audit</a></li>
+        <li><a href="vendor-risk.html"><span class="nav-icon">🏢</span> Vendor Risk</a></li>
+        <li><a href="reports.html"><span class="nav-icon">📈</span> Reports</a></li>
+      </ul>
+      <div class="sidebar-footer">GRC-Nexus v2.1<br>NDS2 Aligned Platform</div>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumb">
+        <a href="index.html" class="breadcrumb-link">Dashboard</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current">Compliance</span>
+      </div>
+      <div class="page-header">
+        <div class="page-title">Compliance Management</div>
+        <div class="page-subtitle">Statutory Obligations &amp; Policy Library | Ministry of Finance</div>
+      </div>
+
+      <!-- Summary bar -->
+      <div class="stat-grid" style="grid-template-columns:repeat(4,1fr);">
+        <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-value">24</div><div class="stat-label">Compliant</div></div>
+        <div class="stat-card"><div class="stat-icon">⏰</div><div class="stat-value">10</div><div class="stat-label">Due Soon (30 days)</div><div class="stat-trend up">▲</div></div>
+        <div class="stat-card"><div class="stat-icon">❌</div><div class="stat-value">7</div><div class="stat-label">Overdue</div><div class="stat-trend up">▲</div></div>
+        <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-value">60%</div><div class="stat-label">Overall Score</div><div class="stat-trend down">▼</div></div>
+      </div>
+
+      <div class="tabs-container">
+        <div class="tabs-nav">
+          <button class="tab-btn">Statutory Obligations</button>
+          <button class="tab-btn">Policy Library</button>
+        </div>
+
+        <!-- Tab 1: Statutory Obligations -->
+        <div class="tab-content">
+          <div class="grid-2" style="align-items:start;">
+            <!-- Donut Chart -->
+            <div class="card">
+              <div class="card-title"><span class="card-title-icon">📊</span> Statutory Compliance Summary</div>
+              <div style="display:flex;gap:24px;align-items:center;justify-content:center;padding:16px 0;">
+                <svg viewBox="0 0 140 140" width="140" height="140" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Donut: 60% compliant, 25% due soon, 15% non-compliant. r=55, circ≈345.6 -->
+                  <circle cx="70" cy="70" r="55" fill="none" stroke="#27AE60" stroke-width="22"
+                    stroke-dasharray="207.4 138.2" stroke-dashoffset="86.4" transform="rotate(-90 70 70)"/>
+                  <circle cx="70" cy="70" r="55" fill="none" stroke="#E67E22" stroke-width="22"
+                    stroke-dasharray="86.4 259.2" stroke-dashoffset="86.4" transform="rotate(114.5 70 70)"/>
+                  <circle cx="70" cy="70" r="55" fill="none" stroke="#C0392B" stroke-width="22"
+                    stroke-dasharray="51.8 293.8" stroke-dashoffset="86.4" transform="rotate(189.5 70 70)"/>
+                  <text x="70" y="74" font-size="20" fill="#1C2B3A" font-weight="700" text-anchor="middle">60%</text>
+                </svg>
+                <div class="chart-legend">
+                  <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#27AE60;"></div> Compliant — 24 items (60%)</div>
+                  <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#E67E22;"></div> Due Soon — 10 items (25%)</div>
+                  <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#C0392B;"></div> Overdue — 6 items (15%)</div>
+                </div>
+              </div>
+            </div>
+            <!-- Bar chart by category -->
+            <div class="card">
+              <div class="card-title"><span class="card-title-icon">📋</span> Compliance by Regulator</div>
+              <div style="padding:8px 0;">
+                <div class="comp-bar-row"><span class="comp-bar-label">RBZ Monetary Policy</span><div class="comp-bar-track"><div class="comp-bar-fill" style="width:80%;background:var(--success);"></div></div><span class="comp-bar-value">80%</span></div>
+                <div class="comp-bar-row"><span class="comp-bar-label">ZIMRA Tax Returns</span><div class="comp-bar-track"><div class="comp-bar-fill" style="width:72%;background:var(--success);"></div></div><span class="comp-bar-value">72%</span></div>
+                <div class="comp-bar-row"><span class="comp-bar-label">PPDPA / Data Privacy</span><div class="comp-bar-track"><div class="comp-bar-fill" style="width:55%;background:var(--warning);"></div></div><span class="comp-bar-value">55%</span></div>
+                <div class="comp-bar-row"><span class="comp-bar-label">PFMA Reporting</span><div class="comp-bar-track"><div class="comp-bar-fill" style="width:90%;background:var(--success);"></div></div><span class="comp-bar-value">90%</span></div>
+                <div class="comp-bar-row"><span class="comp-bar-label">PSC Labour Regulations</span><div class="comp-bar-track"><div class="comp-bar-fill" style="width:38%;background:var(--danger);"></div></div><span class="comp-bar-value">38%</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="filter-bar">
+            <label class="filter-label">Status:</label>
+            <select class="filter-select" onchange="filterTable('stat-tbody', [{colIndex:5, value:this.value}])">
+              <option value="all">All</option>
+              <option value="Compliant">Compliant</option>
+              <option value="Due Soon">Due Soon</option>
+              <option value="Overdue">Overdue</option>
+            </select>
+            <label class="filter-label" style="margin-left:16px;">Regulator:</label>
+            <select class="filter-select" onchange="filterTable('stat-tbody', [{colIndex:2, value:this.value}])">
+              <option value="all">All</option>
+              <option value="RBZ">RBZ</option>
+              <option value="ZIMRA">ZIMRA</option>
+              <option value="PPDPA">PPDPA</option>
+              <option value="PFMA">PFMA</option>
+            </select>
+          </div>
+
+          <div class="card" style="padding:0;">
+            <table id="stat-table" class="data-table">
+              <thead>
+                <tr>
+                  <th>Ref</th>
+                  <th>Obligation</th>
+                  <th>Regulator</th>
+                  <th>Frequency</th>
+                  <th class="sortable">Due Date <span class="sort-icon">↕</span></th>
+                  <th>Status</th>
+                  <th>Owner</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="stat-tbody">
+                <tr>
+                  <td>SO-001</td><td>Monthly Monetary Policy Report Submission</td><td>RBZ</td><td>Monthly</td>
+                  <td>31 May 2026</td><td><span class="badge badge-overdue">Overdue</span></td><td>T. Moyo</td>
+                  <td><button class="btn-link" onclick="openPanel('comp-panel')">View</button></td>
+                </tr>
+                <tr>
+                  <td>SO-002</td><td>ZIMRA Quarterly Tax Return — Q1 2026</td><td>ZIMRA</td><td>Quarterly</td>
+                  <td>30 Apr 2026</td><td><span class="badge badge-closed">Compliant</span></td><td>S. Choto</td>
+                  <td><button class="btn-link" onclick="openPanel('comp-panel')">View</button></td>
+                </tr>
+                <tr>
+                  <td>SO-003</td><td>PPDPA Personal Data Processing Register Update</td><td>PPDPA</td><td>Annual</td>
+                  <td>15 Jun 2026</td><td><span class="badge badge-due-soon">Due Soon</span></td><td>N. Zimba</td>
+                  <td><button class="btn-link" onclick="openPanel('comp-panel')">View</button></td>
+                </tr>
+                <tr>
+                  <td>SO-004</td><td>PFMA Section 38 — Half-Year Budget Performance Report</td><td>PFMA</td><td>Semi-Annual</td>
+                  <td>31 Jul 2026</td><td><span class="badge badge-due-soon">Due Soon</span></td><td>P. Ndoro</td>
+                  <td><button class="btn-link" onclick="openPanel('comp-panel')">View</button></td>
+                </tr>
+                <tr>
+                  <td>SO-005</td><td>PSC Annual Staff Return Submission</td><td>PSC</td><td>Annual</td>
+                  <td>31 Mar 2026</td><td><span class="badge badge-overdue">Overdue</span></td><td>F. Sithole</td>
+                  <td><button class="btn-link" onclick="openPanel('comp-panel')">View</button></td>
+                </tr>
+                <tr>
+                  <td>SO-006</td><td>RBZ Foreign Exchange Control Returns</td><td>RBZ</td><td>Monthly</td>
+                  <td>5 Jun 2026</td><td><span class="badge badge-closed">Compliant</span></td><td>T. Moyo</td>
+                  <td><button class="btn-link" onclick="openPanel('comp-panel')">View</button></td>
+                </tr>
+                <tr>
+                  <td>SO-007</td><td>Annual Report to Parliament — FY2025</td><td>PFMA</td><td>Annual</td>
+                  <td>30 Jun 2026</td><td><span class="badge badge-due-soon">Due Soon</span></td><td>P. Ndoro</td>
+                  <td><button class="btn-link" onclick="openPanel('comp-panel')">View</button></td>
+                </tr>
+                <tr>
+                  <td>SO-008</td><td>ZIMRA Transfer Pricing Documentation</td><td>ZIMRA</td><td>Annual</td>
+                  <td>30 Sep 2026</td><td><span class="badge badge-closed">Compliant</span></td><td>S. Choto</td>
+                  <td><button class="btn-link" onclick="openPanel('comp-panel')">View</button></td>
+                </tr>
+                <tr>
+                  <td>SO-009</td><td>PPDPA Breach Notification Register</td><td>PPDPA</td><td>As needed</td>
+                  <td>—</td><td><span class="badge badge-overdue">Overdue</span></td><td>N. Zimba</td>
+                  <td><button class="btn-link" onclick="openPanel('comp-panel')">View</button></td>
+                </tr>
+                <tr>
+                  <td>SO-010</td><td>RBZ Quarterly Capital Adequacy Assessment</td><td>RBZ</td><td>Quarterly</td>
+                  <td>30 Jun 2026</td><td><span class="badge badge-due-soon">Due Soon</span></td><td>T. Moyo</td>
+                  <td><button class="btn-link" onclick="openPanel('comp-panel')">View</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tab 2: Policy Library -->
+        <div class="tab-content">
+          <div class="card" style="padding:0;">
+            <table id="policy-table" class="data-table">
+              <thead>
+                <tr>
+                  <th>Policy Ref</th>
+                  <th>Policy Name</th>
+                  <th>Category</th>
+                  <th>Version</th>
+                  <th class="sortable">Approved Date <span class="sort-icon">↕</span></th>
+                  <th class="sortable">Review Due <span class="sort-icon">↕</span></th>
+                  <th>Lifecycle</th>
+                  <th>Owner</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>POL-001</td><td>Enterprise Risk Management Policy</td><td>Governance</td><td>v3.0</td>
+                  <td>12 Feb 2026</td><td>12 Feb 2028</td>
+                  <td><span class="lifecycle-dot active"></span> <span style="font-size:12px;">Active</span></td>
+                  <td>T. Moyo</td>
+                </tr>
+                <tr>
+                  <td>POL-002</td><td>Procurement and Tendering Policy</td><td>Procurement</td><td>v4.1</td>
+                  <td>10 May 2026</td><td>10 May 2028</td>
+                  <td><span class="lifecycle-dot active"></span> <span style="font-size:12px;">Active</span></td>
+                  <td>C. Mwale</td>
+                </tr>
+                <tr>
+                  <td>POL-003</td><td>Information and Cybersecurity Policy</td><td>ICT</td><td>v2.0</td>
+                  <td>15 Jun 2024</td><td>15 Jun 2026</td>
+                  <td><span class="lifecycle-dot review"></span> <span style="font-size:12px;color:#E67E22;">Due for Review</span></td>
+                  <td>T. Makoni</td>
+                </tr>
+                <tr>
+                  <td>POL-004</td><td>Anti-Corruption and Ethics Policy</td><td>Governance</td><td>v2.2</td>
+                  <td>01 Jan 2025</td><td>01 Jan 2027</td>
+                  <td><span class="lifecycle-dot active"></span> <span style="font-size:12px;">Active</span></td>
+                  <td>N. Zimba</td>
+                </tr>
+                <tr>
+                  <td>POL-005</td><td>Human Resources Policy</td><td>HR</td><td>v5.0</td>
+                  <td>01 Mar 2023</td><td>01 Mar 2026</td>
+                  <td><span class="lifecycle-dot expired"></span> <span style="font-size:12px;color:#C0392B;">Expired</span></td>
+                  <td>F. Sithole</td>
+                </tr>
+                <tr>
+                  <td>POL-006</td><td>Data Protection and Privacy Policy</td><td>Compliance</td><td>v1.1</td>
+                  <td>20 Aug 2024</td><td>20 Aug 2026</td>
+                  <td><span class="lifecycle-dot review"></span> <span style="font-size:12px;color:#E67E22;">Due for Review</span></td>
+                  <td>N. Zimba</td>
+                </tr>
+                <tr>
+                  <td>POL-007</td><td>Asset Management and Disposal Policy</td><td>Finance</td><td>v3.1</td>
+                  <td>10 Nov 2024</td><td>10 Nov 2026</td>
+                  <td><span class="lifecycle-dot active"></span> <span style="font-size:12px;">Active</span></td>
+                  <td>S. Choto</td>
+                </tr>
+                <tr>
+                  <td>POL-008</td><td>Internal Audit Charter</td><td>Audit</td><td>v2.0</td>
+                  <td>12 Feb 2026</td><td>12 Feb 2028</td>
+                  <td><span class="lifecycle-dot active"></span> <span style="font-size:12px;">Active</span></td>
+                  <td>B. Chirwa</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Compliance Detail Panel -->
+<div class="panel-overlay" id="comp-panel">
+  <div class="side-panel">
+    <div class="panel-header">
+      <div class="panel-title">Obligation Detail — SO-001</div>
+      <button class="panel-close" onclick="closePanel('comp-panel')">✕</button>
+    </div>
+    <div class="panel-body">
+      <div class="panel-meta-grid">
+        <div><div class="panel-meta-label">Reference</div><div class="panel-meta-val">SO-001</div></div>
+        <div><div class="panel-meta-label">Regulator</div><div class="panel-meta-val">Reserve Bank of Zimbabwe</div></div>
+        <div><div class="panel-meta-label">Frequency</div><div class="panel-meta-val">Monthly</div></div>
+        <div><div class="panel-meta-label">Due Date</div><div class="panel-meta-val">31 May 2026</div></div>
+        <div><div class="panel-meta-label">Status</div><div class="panel-meta-val"><span class="badge badge-overdue">Overdue</span></div></div>
+        <div><div class="panel-meta-label">Owner</div><div class="panel-meta-val">T. Moyo</div></div>
+      </div>
+      <div class="panel-section-title">Obligation Description</div>
+      <p style="font-size:13px;color:#3D5166;line-height:1.6;">Monthly Monetary Policy Report must be submitted to the Reserve Bank of Zimbabwe by the 5th business day of the following month, covering macroeconomic indicators, expenditure outturns, and fiscal financing.</p>
+      <div class="panel-section-title">Action Required</div>
+      <p style="font-size:13px;color:#C0392B;font-weight:600;">IMMEDIATE: Submit overdue May 2026 report to RBZ within 3 business days.</p>
+    </div>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
