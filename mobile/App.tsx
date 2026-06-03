@@ -6,17 +6,28 @@ import { useAuthStore } from './src/store/authStore'
 import { LoginScreen } from './src/screens/LoginScreen'
 import { DashboardScreen } from './src/screens/DashboardScreen'
 import { MeetingsScreen } from './src/screens/MeetingsScreen'
+import { MeetingDetailScreen } from './src/screens/MeetingDetailScreen'
 import { ActionsScreen } from './src/screens/ActionsScreen'
 import { RisksScreen } from './src/screens/RisksScreen'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
+const MeetingsStack = createStackNavigator()
+
+function MeetingsStackScreen() {
+  return (
+    <MeetingsStack.Navigator screenOptions={{ headerShown: false }}>
+      <MeetingsStack.Screen name="MeetingsList" component={MeetingsScreen} />
+      <MeetingsStack.Screen name="MeetingDetail" component={MeetingDetailScreen} />
+    </MeetingsStack.Navigator>
+  )
+}
 
 function MainTabs() {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen name="Dashboard" component={DashboardScreen} />
-      <Tab.Screen name="Meetings" component={MeetingsScreen} />
+      <Tab.Screen name="Meetings" component={MeetingsStackScreen} />
       <Tab.Screen name="Actions" component={ActionsScreen} />
       <Tab.Screen name="Risks" component={RisksScreen} />
     </Tab.Navigator>
