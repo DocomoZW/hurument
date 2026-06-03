@@ -2,20 +2,27 @@ import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useAuthStore } from '../store/authStore'
+import { useSyncQueueStore } from '../store/syncQueue'
 import { supabase } from '../api/client'
 import type { Meeting } from './MeetingsScreen'
 
 export function DashboardScreen() {
   const navigation = useNavigation<any>()
   const { user, logout } = useAuthStore()
+  const { getPendingCount, _hydrate: hydrateSync } = useSyncQueueStore()
   const [nextMeeting, setNextMeeting] = useState<Meeting | null>(null)
   const [loadingMeeting, setLoadingMeeting] = useState(true)
+  const [offlineCount, setOfflineCount] = useState(0)
 
   const stats = [
     { label: 'Open Risks', value: '9', color: '#1A3E6E' },
     { label: 'Pending Actions', value: '5', color: '#C9A84C' },
     { label: 'Incidents', value: '3', color: '#c00' },
   ]
+
+  useEffect(() => {
+    hydrateSync()
+  }, [])
 
   useEffect(() => {
     async function fetchNextMeeting() {
@@ -41,6 +48,14 @@ export function DashboardScreen() {
     fetchNextMeeting()
   }, [user?.institution_id])
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setOfflineCount(getPendingCount())
+    }, 5000)
+    setOfflineCount(getPendingCount())
+    return () => clearInterval(interval)
+  }, [getPendingCount])
+
   const getCountdownText = (dateStr: string) => {
     const diff = new Date(dateStr).getTime() - Date.now()
     if (diff <= 0) return 'Starting now'
@@ -65,6 +80,21 @@ export function DashboardScreen() {
           </View>
         ))}
       </View>
+
+      <TouchableOpacity
+        style={[styles.offlineCard, offlineCount === 0 && styles.offlineCardSynced]}
+        onPress={() => navigation.navigate('SyncStatus')}
+      >
+        <Text style={styles.offlineLabel}>Offline Actions</Text>
+        <View style={styles.offlineRow}>
+          <Text style={[styles.offlineValue, { color: offlineCount > 0 ? '#C9A84C' : '#1A3E6E' }]}>
+            {offlineCount}
+          </Text>
+          <Text style={styles.offlineText}>
+            {offlineCount > 0 ? 'pending sync' : 'All changes synced'}
+          </Text>
+        </View>
+      </TouchableOpacity>
 
       {loadingMeeting ? (
         <View style={styles.meetingCard}>
@@ -107,6 +137,27 @@ const styles = StyleSheet.create({
   },
   statValue: { fontSize: 24, fontWeight: 'bold' },
   statLabel: { fontSize: 12, color: '#666', marginTop: 4 },
+  offlineCard: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 16,
+    marginHorizontal: 12,
+    marginTop: 4,
+    marginBottom: 12,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+    borderLeftWidth: 4,
+    borderLeftColor: '#1A3E6E',
+  },
+  offlineCardSynced: {
+    borderLeftColor: '#4caf50',
+  },
+  offlineLabel: { fontSize: 12, color: '#999', marginBottom: 4, textTransform: 'uppercase', letterSpacing: 0.5 },
+  offlineRow: { flexDirection: 'row', alignItems: 'baseline', gap: 8 },
+  offlineValue: { fontSize: 24, fontWeight: 'bold' },
+  offlineText: { fontSize: 14, color: '#666' },
   meetingCard: {
     backgroundColor: '#fff',
     borderRadius: 8,

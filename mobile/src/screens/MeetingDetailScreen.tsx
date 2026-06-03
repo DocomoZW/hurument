@@ -14,7 +14,11 @@ import Pdf from 'react-native-pdf'
 import { supabase } from '../api/client'
 import { useOfflineStore } from '../store/offlineStore'
 import { useNetwork } from '../hooks/useNetwork'
+import { useSyncQueueStore } from '../store/syncQueue'
+import { useAnnotationStore } from '../store/annotationStore'
 import { getLocalPdfPath } from '../utils/download'
+import { AnnotationOverlay } from '../components/meeting/AnnotationOverlay'
+import type { AnnotationType } from '../store/annotationStore'
 import type { Meeting } from './MeetingsScreen'
 
 interface Attendee {
@@ -40,12 +44,19 @@ export function MeetingDetailScreen() {
   const [localUri, setLocalUri] = useState<string | null>(null)
   const [showPdf, setShowPdf] = useState(false)
   const [pdfError, setPdfError] = useState('')
+  const [isAnnotating, setIsAnnotating] = useState(false)
+  const [activeTool, setActiveTool] = useState<AnnotationType | null>(null)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [annotationCount, setAnnotationCount] = useState(0)
+  const [pendingCount, setPendingCount] = useState(0)
 
   useEffect(() => {
     if (!meeting) {
       navigation.goBack()
       return
     }
+
+    hydrateAnnotations()
 
     // Check if already downloaded
     const checkLocal = async () => {
@@ -126,6 +137,30 @@ export function MeetingDetailScreen() {
 
   const handleClosePdf = () => {
     setShowPdf(false)
+    setIsAnnotating(false)
+    setActiveTool(null)
+  }
+
+  const toggleAnnotationMode = () => {
+    if (isAnnotating) {
+      setIsAnnotating(false)
+      setActiveTool(null)
+    } else {
+      setIsAnnotating(true)
+    }
+  }
+
+  const handleToolSelect = (tool: AnnotationType) => {
+    setActiveTool((prev) => (prev === tool ? null : tool))
+  }
+
+  const handleSyncNow = async () => {
+    if (!isConnected) {
+      Alert.alert('Offline', 'Connect to the internet to sync.')
+      return
+    }
+    await processQueue()
+    setPendingCount(getPendingCount())
   }
 
   if (!meeting) return null
@@ -248,28 +283,88 @@ export function MeetingDetailScreen() {
         <View style={styles.pdfContainer}>
           <View style={styles.pdfHeader}>
             <Text style={styles.pdfTitle}>Board Pack</Text>
-            <TouchableOpacity onPress={handleClosePdf}>
-              <Text style={styles.pdfClose}>Close</Text>
-            </TouchableOpacity>
+            <View style={styles.pdfHeaderActions}>
+              {isAnnotating ? (
+                <TouchableOpacity onPress={handleSyncNow} style={styles.syncButton}>
+                  <Text style={styles.syncButtonText}>
+                    {pendingCount > 0 ? `Sync (${pendingCount})` : 'Synced'}
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
+              <TouchableOpacity onPress={toggleAnnotationMode} style={styles.annotateButton}>
+                <Text style={styles.annotateButtonText}>
+                  {isAnnotating ? 'Done' : 'Annotate'}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleClosePdf}>
+                <Text style={styles.pdfClose}>Close</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <Pdf
-            source={{ uri: localUri, cache: false }}
-            style={styles.pdf}
-            onError={(err: any) => {
-              setPdfError(err?.message || 'Failed to load PDF')
-              setShowPdf(false)
-            }}
-            onLoadComplete={(numberOfPages: number) => {
-              console.log(`PDF loaded: ${numberOfPages} pages`)
-            }}
-            renderActivityIndicator={(progress: number) => (
-              <View style={styles.pdfLoading}>
-                <ActivityIndicator color="#1A3E6E" />
-                <Text style={styles.pdfLoadingText}>{Math.round(progress * 100)}%</Text>
-              </View>
-            )}
-          />
+          <View style={styles.pdfWrapper}>
+            <Pdf
+              source={{ uri: localUri, cache: false }}
+              style={styles.pdf}
+              onError={(err: any) => {
+                setPdfError(err?.message || 'Failed to load PDF')
+                setShowPdf(false)
+              }}
+              onLoadComplete={(numberOfPages: number) => {
+                console.log(`PDF loaded: ${numberOfPages} pages`)
+              }}
+              onPageChanged={(page: number) => {
+                setCurrentPage(page)
+              }}
+              renderActivityIndicator={(progress: number) => (
+                <View style={styles.pdfLoading}>
+                  <ActivityIndicator color="#1A3E6E" />
+                  <Text style={styles.pdfLoadingText}>{Math.round(progress * 100)}%</Text>
+                </View>
+              )}
+            />
+            {isAnnotating ? (
+              <AnnotationOverlay
+                meetingId={meeting.id}
+                pageNumber={currentPage}
+                activeTool={activeTool}
+                onAnnotationCountChange={setAnnotationCount}
+              />
+            ) : null}
+          </View>
           {pdfError ? <Text style={styles.pdfError}>{pdfError}</Text> : null}
+
+          {isAnnotating ? (
+            <View style={styles.toolbar}>
+              <TouchableOpacity
+                style={[
+                  styles.toolButton,
+                  activeTool === 'highlight' && styles.toolButtonActive,
+                ]}
+                onPress={() => handleToolSelect('highlight')}
+              >
+                <Text style={styles.toolButtonText}>Highlight</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.toolButton,
+                  activeTool === 'note' && styles.toolButtonActive,
+                ]}
+                onPress={() => handleToolSelect('note')}
+              >
+                <Text style={styles.toolButtonText}>Note</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.toolButton,
+                  activeTool === 'signature' && styles.toolButtonActive,
+                ]}
+                onPress={() => handleToolSelect('signature')}
+              >
+                <Text style={styles.toolButtonText}>Signature</Text>
+              </TouchableOpacity>
+              <Text style={styles.annotationCount}>{annotationCount} mark{annotationCount !== 1 ? 's' : ''}</Text>
+            </View>
+          ) : null}
         </View>
       ) : null}
     </View>
@@ -372,6 +467,37 @@ const styles = StyleSheet.create({
     paddingTop: 48,
     backgroundColor: '#1A3E6E',
   },
+  pdfHeaderActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  syncButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    backgroundColor: '#C9A84C',
+    borderRadius: 6,
+  },
+  syncButtonText: {
+    color: '#1A3E6E',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  annotateButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    backgroundColor: '#fff',
+    borderRadius: 6,
+  },
+  annotateButtonText: {
+    color: '#1A3E6E',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  pdfWrapper: {
+    flex: 1,
+    position: 'relative',
+  },
   pdfTitle: { fontSize: 18, fontWeight: 'bold', color: '#fff' },
   pdfClose: { fontSize: 16, color: '#C9A84C', fontWeight: '600' },
   pdf: {
@@ -389,4 +515,31 @@ const styles = StyleSheet.create({
   },
   pdfLoadingText: { marginTop: 8, color: '#1A3E6E', fontSize: 14 },
   pdfError: { color: '#c00', textAlign: 'center', margin: 12 },
+  toolbar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    padding: 12,
+    backgroundColor: '#1A3E6E',
+    paddingBottom: 24,
+  },
+  toolButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    backgroundColor: 'rgba(255,255,255,0.15)',
+  },
+  toolButtonActive: {
+    backgroundColor: '#C9A84C',
+  },
+  toolButtonText: {
+    color: '#fff',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  annotationCount: {
+    color: '#C9A84C',
+    fontSize: 12,
+    fontWeight: '600',
+  },
 })

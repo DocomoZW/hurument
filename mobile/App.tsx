@@ -3,12 +3,15 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useAuthStore } from './src/store/authStore'
+import { useSyncQueueStore } from './src/store/syncQueue'
+import { useAnnotationStore } from './src/store/annotationStore'
 import { LoginScreen } from './src/screens/LoginScreen'
 import { DashboardScreen } from './src/screens/DashboardScreen'
 import { MeetingsScreen } from './src/screens/MeetingsScreen'
 import { MeetingDetailScreen } from './src/screens/MeetingDetailScreen'
 import { ActionsScreen } from './src/screens/ActionsScreen'
 import { RisksScreen } from './src/screens/RisksScreen'
+import { SyncStatusScreen } from './src/screens/SyncStatusScreen'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -19,6 +22,7 @@ function MeetingsStackScreen() {
     <MeetingsStack.Navigator screenOptions={{ headerShown: false }}>
       <MeetingsStack.Screen name="MeetingsList" component={MeetingsScreen} />
       <MeetingsStack.Screen name="MeetingDetail" component={MeetingDetailScreen} />
+      <MeetingsStack.Screen name="SyncStatus" component={SyncStatusScreen} />
     </MeetingsStack.Navigator>
   )
 }
@@ -36,9 +40,13 @@ function MainTabs() {
 
 export default function App() {
   const { isLoading, user, restoreSession } = useAuthStore()
+  const { _hydrate: hydrateSync } = useSyncQueueStore()
+  const { _hydrate: hydrateAnnotations } = useAnnotationStore()
 
   useEffect(() => {
     restoreSession()
+    hydrateSync()
+    hydrateAnnotations()
   }, [])
 
   if (isLoading) {
